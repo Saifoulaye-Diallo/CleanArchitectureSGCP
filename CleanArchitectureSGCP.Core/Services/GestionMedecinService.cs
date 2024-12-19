@@ -17,14 +17,24 @@ namespace CleanArchitectureSGCP.Core.Services
             _medecin = medecin;
         }
 
-        public async Task AddAsync(Medecin medecin)
+        public async Task<Medecin> AddAsync(Medecin medecin)
         {
-            await _medecin.AddAsync(medecin);
+             return await _medecin.AddAsync(medecin);
         }
 
         public Medecin Connexion(string nomUtilisateur, string motDepasse)
         {
             return _medecin.Connexion(nomUtilisateur, motDepasse);
+        }
+
+        public Task<Medecin> GetMedecinWithPatientsAsync(int medecinId)
+        {
+            return _medecin.GetMedecinWithPatientsAsync(medecinId);
+        }
+
+        public async Task UpdateAsync(Medecin medecin)
+        {
+             await _medecin.UpdateAsync(medecin);
         }
     }
 }

@@ -10,6 +10,6 @@ namespace CleanArchitectureSGCP.Core.Interfaces
 {
     public interface IPrescription : IAsyncRepository<Prescription>, IRepository<Prescription>
     {
-
+        
     }
 }

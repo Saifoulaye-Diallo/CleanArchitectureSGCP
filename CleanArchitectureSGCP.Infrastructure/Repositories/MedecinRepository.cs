@@ -29,5 +29,13 @@ namespace CleanArchitectureSGCP.Infrastructure.Repositories
                 return null;
             }
         }
+
+        //Recuperer la medecin avec ses patients.
+        public async Task<Medecin> GetMedecinWithPatientsAsync(int medecinId)
+        {
+            return await _Sgcpcontext.Medecins
+                .Include(m => m.Patients) // Inclure les patients associés
+                .FirstOrDefaultAsync(m => m.Id == medecinId); // Filtrer par l'ID du médecin
+        }
     }
 }

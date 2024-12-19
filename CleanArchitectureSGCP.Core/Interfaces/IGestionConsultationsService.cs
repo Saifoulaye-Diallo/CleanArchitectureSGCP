@@ -9,7 +9,7 @@ namespace CleanArchitectureSGCP.Core.Interfaces
 {
     public interface IGestionConsultationsService
     {
-        Task AddConsultation(Consultation consultation);
-        Task GetPatientConsultationHistory(int id);
+        Task AddConsultationAsync(Consultation consultation);
+        Task GetPatientConsultationHistoryAsync(int id);
     }
 }

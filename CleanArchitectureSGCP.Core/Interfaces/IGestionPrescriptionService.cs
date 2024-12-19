@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CleanArchitectureSGCP.Core.Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +10,12 @@ namespace CleanArchitectureSGCP.Core.Interfaces
 {
     public interface IGestionPrescriptionService
     {
-        Task AddPrescription(IPrescription prescription);
+        Task AddPrescriptionAsync(Prescription prescription);
 
-        Task UpdatePrescription(IPrescription prescription);
+        Task UpdatePrescriptionAsync(Prescription prescription);
 
-        Task GetPrescriptionById(int id);
+        Task GetPrescriptionByIdAsync(int id);
+       
+
     }
 }

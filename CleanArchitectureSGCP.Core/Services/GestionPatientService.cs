@@ -17,19 +17,25 @@ namespace CleanArchitectureSGCP.Core.Services
             _patientRepository = patientRepository;
         }
 
-        public async Task AddPatient(Patient patient)
+        public async Task<Patient> AddPatientAsync(Patient patient)
         {
-            await _patientRepository.AddAsync(patient);
+            return await _patientRepository.AddAsync(patient);
         }
 
-        public async Task GetPatientById(int id)
+        public async Task<Patient> GetPatientByIdAsync(int id)
         {
-           await _patientRepository.GetByIdAsync(id);
+           return await _patientRepository.GetByIdAsync(id);
         }
 
-        public async Task UpdatePatient(Patient patient)
+        public async Task UpdatePatientAsync(Patient patient)
         {
-            await _patientRepository.UpdateAsync(patient);
+             await _patientRepository.UpdateAsync(patient);
         }
+
+        public async Task<List<Patient>> GetPatientsByMedecinIdAsync(int medecinId)
+        {
+            return await _patientRepository.GetPatientsByMedecinIdAsync(medecinId);
+        }
+
     }
 }

@@ -8,28 +8,28 @@ using System.Threading.Tasks;
 
 namespace CleanArchitectureSGCP.Core.Services
 {
-    public class GestionPrescriptionService : IGestionPatientService
+    public class GestionPrescriptionService : IGestionPrescriptionService
     {
-        public readonly IPatient _patientRepository;
+        public readonly IPrescription _prescriptionRepository;
 
-        public GestionPrescriptionService(IPatient patientRepository)
+        public GestionPrescriptionService(IPrescription prescriptionRepository)
         {
-            _patientRepository = patientRepository;
+            _prescriptionRepository = prescriptionRepository;
         }
 
-        public async Task AddPatient(Patient patient)
+        public Task AddPrescriptionAsync(Prescription prescription)
         {
-            await _patientRepository.AddAsync(patient);
+             return _prescriptionRepository.AddAsync(prescription);
         }
 
-        public async Task GetPatientById(int id)
+        public Task GetPrescriptionByIdAsync(int id)
         {
-            await _patientRepository.GetByIdAsync(id);
+             return _prescriptionRepository.GetByIdAsync(id);
         }
 
-        public async Task UpdatePatient(Patient patient)
+        public Task UpdatePrescriptionAsync(Prescription prescription)
         {
-            await _patientRepository.UpdateAsync(patient);
+           return _prescriptionRepository.UpdateAsync(prescription);
         }
     }
 }

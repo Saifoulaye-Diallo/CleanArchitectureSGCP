@@ -15,17 +15,16 @@ namespace CleanArchitectureSGCP.Core.Entities
         public string Instruction { get; set; }
         public string Duree { get; set; }
         public int etat { get; set; }
-        public Consultation Consultation { get; set; }
+
         public Prescription() { }
 
-        public Prescription(string medicament, string dosage, string instruction, string duree, int etat, Consultation consultation)
+        public Prescription(string medicament, string dosage, string instruction, string duree, int etat)
         {
             Medicament = medicament;
             Dosage = dosage;
             Instruction = instruction;
             Duree = duree;
             this.etat = etat;
-            Consultation = consultation;
         }
     }
 }

@@ -16,10 +16,10 @@ namespace CleanArchitectureSGCP.Core.Entities
         public string Addresse { get; set; }
         public string NumeroTelephones { get; set; }
         public string AddresseCourriel { get; set; }
-        public Medecin medecin { get; set; }    
+        public DossierMedical DossierMedical { get; set; }
         public Patient() { }
 
-        public Patient(string nom, string prenom, DateTime dateDeNaissance, string addresse, string numeroTelephones, string addresseCourriel, Medecin medecin)
+        public Patient(string nom, string prenom, DateTime dateDeNaissance, string addresse, string numeroTelephones, string addresseCourriel, DossierMedical dossierMedical)
         {
             Nom = nom;
             Prenom = prenom;
@@ -27,7 +27,7 @@ namespace CleanArchitectureSGCP.Core.Entities
             Addresse = addresse;
             NumeroTelephones = numeroTelephones;
             AddresseCourriel = addresseCourriel;
-            this.medecin = medecin;
+            DossierMedical = dossierMedical;
         }
     }
 }

@@ -73,7 +73,8 @@ namespace CleanArchitectureSGCP.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PatientId");
+                    b.HasIndex("PatientId")
+                        .IsUnique();
 
                     b.ToTable("DossiersMedicals");
                 });
@@ -97,6 +98,9 @@ namespace CleanArchitectureSGCP.Infrastructure.Migrations
                     b.Property<DateTime>("DateDeNaissance")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("MedecinId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nom")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -109,12 +113,9 @@ namespace CleanArchitectureSGCP.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("medecinId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("medecinId");
+                    b.HasIndex("MedecinId");
 
                     b.ToTable("Patients");
                 });
@@ -127,7 +128,7 @@ namespace CleanArchitectureSGCP.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ConsultationId")
+                    b.Property<int?>("ConsultationId")
                         .HasColumnType("int");
 
                     b.Property<string>("Dosage")
@@ -268,8 +269,8 @@ namespace CleanArchitectureSGCP.Infrastructure.Migrations
             modelBuilder.Entity("CleanArchitectureSGCP.Core.Entities.DossierMedical", b =>
                 {
                     b.HasOne("CleanArchitectureSGCP.Core.Entities.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId")
+                        .WithOne("DossierMedical")
+                        .HasForeignKey("CleanArchitectureSGCP.Core.Entities.DossierMedical", "PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -278,28 +279,20 @@ namespace CleanArchitectureSGCP.Infrastructure.Migrations
 
             modelBuilder.Entity("CleanArchitectureSGCP.Core.Entities.Patient", b =>
                 {
-                    b.HasOne("CleanArchitectureSGCP.Core.Entities.Medecin", "medecin")
+                    b.HasOne("CleanArchitectureSGCP.Core.Entities.Medecin", null)
                         .WithMany("Patients")
-                        .HasForeignKey("medecinId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("medecin");
+                        .HasForeignKey("MedecinId");
                 });
 
             modelBuilder.Entity("CleanArchitectureSGCP.Core.Entities.Prescription", b =>
                 {
-                    b.HasOne("CleanArchitectureSGCP.Core.Entities.Consultation", "Consultation")
+                    b.HasOne("CleanArchitectureSGCP.Core.Entities.Consultation", null)
                         .WithMany("Prescriptions")
-                        .HasForeignKey("ConsultationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ConsultationId");
 
                     b.HasOne("CleanArchitectureSGCP.Core.Entities.DossierMedical", null)
                         .WithMany("TraitementPasses")
                         .HasForeignKey("DossierMedicalId");
-
-                    b.Navigation("Consultation");
                 });
 
             modelBuilder.Entity("CleanArchitectureSGCP.Core.Entities.Session", b =>
@@ -323,6 +316,12 @@ namespace CleanArchitectureSGCP.Infrastructure.Migrations
                     b.Navigation("Consultations");
 
                     b.Navigation("TraitementPasses");
+                });
+
+            modelBuilder.Entity("CleanArchitectureSGCP.Core.Entities.Patient", b =>
+                {
+                    b.Navigation("DossierMedical")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CleanArchitectureSGCP.Core.Entities.Session", b =>

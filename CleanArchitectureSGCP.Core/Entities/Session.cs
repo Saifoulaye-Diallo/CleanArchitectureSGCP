@@ -1,4 +1,5 @@
-﻿using CleanArchitectureSGCP.SharedKernel;
+﻿using CleanArchitectureSGCP.Core.Interfaces;
+using CleanArchitectureSGCP.SharedKernel;
 using CleanArchitectureSGCP.SharedKernel.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -79,5 +80,7 @@ namespace CleanArchitectureSGCP.Core.Entities
             DateDeconnexion = dateDeconnexion;
             Medecin = medecin;
         }
+
+      
     }
 }

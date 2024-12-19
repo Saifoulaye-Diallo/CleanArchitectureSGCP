@@ -9,10 +9,10 @@ namespace CleanArchitectureSGCP.Core.Interfaces
 {
     public interface IGestionDossierMedicalService
     {
-        Task AddDossierMedical(DossierMedical dossierMedical);
+        Task AddDossierMedicalAsync(DossierMedical dossierMedical);
 
-        Task UpdateDossierMedical(DossierMedical dossierMedical);
+        Task UpdateDossierMedicalAsync(DossierMedical dossierMedical);
 
-        Task GetDossierMedicalById(int id);
+        Task GetDossierMedicalByIdAsync(int id);
     }
 }

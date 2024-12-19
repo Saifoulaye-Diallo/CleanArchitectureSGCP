@@ -17,19 +17,19 @@ namespace CleanArchitectureSGCP.Core.Services
             _dossierMedical = dossierMedical;
         }
 
-        public async Task AddDossierMedical(DossierMedical dossierMedical)
+        public Task AddDossierMedicalAsync(DossierMedical dossierMedical)
         {
-           await _dossierMedical.AddAsync(dossierMedical);
+           return _dossierMedical.AddAsync(dossierMedical);
         }
 
-        public async Task GetDossierMedicalById(int id)
+        public Task GetDossierMedicalByIdAsync(int id)
         {
-            await _dossierMedical.GetByIdAsync(id);
+             return _dossierMedical.GetByIdAsync(id);
         }
 
-        public async Task UpdateDossierMedical(DossierMedical dossierMedical)
+        public Task UpdateDossierMedicalAsync(DossierMedical dossierMedical)
         {
-            await _dossierMedical.UpdateAsync(dossierMedical);
+            return _dossierMedical.UpdateAsync(dossierMedical);
         }
     }
 }

@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\add_patient_icon.png" />
+    <None Remove="Resources\destion_dossier_medical_icon.png" />
+    <None Remove="Resources\gestion_consultation.png" />
+    <None Remove="Resources\gestion_hospitalisation.png" />
+    <None Remove="Resources\gestion_prescription_icon.png" />
+    <None Remove="Resources\login_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\add_patient_icon.png" />
+    <Resource Include="Resources\destion_dossier_medical_icon.png" />
+    <Resource Include="Resources\gestion_consultation.png" />
+    <Resource Include="Resources\gestion_hospitalisation.png" />
+    <Resource Include="Resources\gestion_prescription_icon.png" />
+    <Resource Include="Resources\login_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MaterialSkin" Version="0.2.1" />
+    <PackageReference Include="MetroFramework" Version="1.2.0.3" />
+    <PackageReference Include="MetroModernUI" Version="1.4.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CleanArchitectureSGCP.Core\CleanArchitectureSGCP.Core.csproj" />
+    <ProjectReference Include="..\CleanArchitectureSGCP.Infrastructure\CleanArchitectureSGCP.Infrastructure.csproj" />
+    <ProjectReference Include="..\SystèmeGestionStationService.SharedKernel\CleanArchitectureSGCP.SharedKernel.csproj" />
+  </ItemGroup>
+
+</Project>

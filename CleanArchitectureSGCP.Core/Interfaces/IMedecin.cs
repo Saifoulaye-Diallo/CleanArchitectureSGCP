@@ -11,5 +11,6 @@ namespace CleanArchitectureSGCP.Core.Interfaces
     public interface IMedecin : IAsyncRepository<Medecin> , IRepository<Medecin>
     {
         Medecin Connexion(string nomUtilisateur, string motDePasse);
+        Task<Medecin> GetMedecinWithPatientsAsync(int medecinId);
     }
 }

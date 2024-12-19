@@ -10,5 +10,6 @@ namespace CleanArchitectureSGCP.Core.Interfaces
 {
     public interface IPatient : IAsyncRepository<Patient>, IRepository<Patient>
     {
+        Task<List<Patient>> GetPatientsByMedecinIdAsync(int medecinId);
     }
 }

@@ -9,10 +9,11 @@ namespace CleanArchitectureSGCP.Core.Interfaces
 {
     public interface IGestionPatientService
     {
-        Task AddPatient(Patient patient);
+        Task<Patient> AddPatientAsync(Patient patient);
 
-        Task UpdatePatient(Patient patient);
+        Task UpdatePatientAsync(Patient patient);
 
-        Task GetPatientById(int id);
+        Task<Patient> GetPatientByIdAsync(int id);
+        Task<List<Patient>> GetPatientsByMedecinIdAsync(int medecinId);
     }
 }
