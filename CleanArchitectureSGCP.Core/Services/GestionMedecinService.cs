@@ -22,9 +22,9 @@ namespace CleanArchitectureSGCP.Core.Services
              return await _medecin.AddAsync(medecin);
         }
 
-        public Medecin Connexion(string nomUtilisateur, string motDepasse)
+        public async Task<Medecin> ConnexionAdync(string nomUtilisateur, string motDepasse)
         {
-            return _medecin.Connexion(nomUtilisateur, motDepasse);
+            return await _medecin.ConnexionAdync(nomUtilisateur, motDepasse);
         }
 
         public Task<Medecin> GetMedecinWithPatientsAsync(int medecinId)

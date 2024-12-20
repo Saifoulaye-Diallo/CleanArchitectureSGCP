@@ -10,6 +10,6 @@ namespace CleanArchitectureSGCP.Core.Interfaces
     public interface IGestionConsultationsService
     {
         Task AddConsultationAsync(Consultation consultation);
-        Task GetPatientConsultationHistoryAsync(int id);
+        Task<List<Consultation>> GetConsultationsByPatientIdAsync(int patientId);
     }
 }

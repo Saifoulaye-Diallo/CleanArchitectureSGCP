@@ -26,7 +26,7 @@ namespace CleanArchitectureSGCP.Core.Entities
             }
         }
 
-        public Medecin Medecin { get; private set; }
+        public virtual Medecin Medecin { get; private set; }
 
         // Liste des consultations associées à la session (encapsulation avec propriété privée)
         private List<Consultation> _consultations = new List<Consultation>();

@@ -14,9 +14,6 @@ namespace CleanArchitectureSGCP.Core.Entities
         public string Motif {  get; set; }
         public string Observation { get; set; }
         public string Diagnostic { get; set; }
-
-        public Session Session { get; set; }
-        public DossierMedical DossierMedical { get; set; }
         public virtual List<Prescription> Prescriptions { get; private set; } = new List<Prescription>();
         public void AddPrescription(Prescription prescription)
         {
@@ -29,14 +26,12 @@ namespace CleanArchitectureSGCP.Core.Entities
 
         public Consultation() { }
 
-        public Consultation(DateTime date, string motif, string observation, string diagnostic, Session session, DossierMedical dossierMedical, List<Prescription> prescriptions)
+        public Consultation(DateTime date, string motif, string observation, string diagnostic, List<Prescription> prescriptions)
         {
             Date = date;
             Motif = motif;
             Observation = observation;
             Diagnostic = diagnostic;
-            Session = session;
-            DossierMedical = dossierMedical;
             Prescriptions = prescriptions;
         }
     }

@@ -11,7 +11,7 @@ namespace CleanArchitectureSGCP.Core.Entities
     public class DossierMedical : BaseEntity, IAggregateRoot
     {
         public int PatientId { get; set; }
-        public Patient Patient { get; set; }
+        public virtual Patient Patient { get; set; }
         public virtual List<Prescription> TraitementPasses { get; private set; } = new List<Prescription>();
 
         public virtual List<Consultation> Consultations { get; private set; } = new List<Consultation>();

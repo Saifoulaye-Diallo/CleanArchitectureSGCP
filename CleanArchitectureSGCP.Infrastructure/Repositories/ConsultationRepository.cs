@@ -31,5 +31,15 @@ namespace CleanArchitectureSGCP.Infrastructure.Repositories
         {
            return _Sgcpcontext.Consultations.Include(t => t.Prescriptions).FirstOrDefaultAsync(t => t.Id == id);
         }
+
+        public async Task<List<Consultation>> GetConsultationsByPatientIdAsync(int patientId)
+        {
+            var dossierMedical = await _Sgcpcontext.DossiersMedicals
+                .Include(dm => dm.Consultations) // Inclure les consultations
+                .FirstOrDefaultAsync(dm => dm.PatientId == patientId);
+
+            return dossierMedical?.Consultations.ToList() ?? new List<Consultation>();
+        }
+
     }
 }

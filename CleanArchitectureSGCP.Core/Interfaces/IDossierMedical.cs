@@ -10,6 +10,6 @@ namespace CleanArchitectureSGCP.Core.Interfaces
 {
     public interface IDossierMedical : IAsyncRepository <DossierMedical>, IRepository<DossierMedical>
     {
-
+        Task<DossierMedical> GetDossierMedicalByPatientIdAsync(int patientId);
     }
 }

@@ -1,6 +1,9 @@
 ﻿using CleanArchitectureSGCP.Core.Entities;
 using CleanArchitectureSGCP.Core.Interfaces;
+using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs;
+using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Fom_Consultation;
 using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Patient;
+using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription;
 using MetroFramework;
 using MetroFramework.Forms;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,9 +17,14 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
     {
         private readonly IGestionPatientService _gestionPatientService;
         private readonly IGestionMedecinService _gestionMedecinService;
-
-        public Accueil(IGestionPatientService gestionPatientService, IGestionMedecinService gestionMedecinService)
+        private readonly IGestionDossierMedicalService _gestionDossierMedicalService;
+        private readonly IGestionConsultationsService _gestionConsultationsService;
+        public Accueil(IGestionPatientService gestionPatientService, IGestionMedecinService gestionMedecinService, IGestionDossierMedicalService gestionDossierMedicalService, IGestionConsultationsService gestionConsultationsService)
         {
+            _gestionPatientService = gestionPatientService ?? throw new ArgumentNullException(nameof(gestionPatientService));
+            _gestionMedecinService = gestionMedecinService ?? throw new ArgumentNullException(nameof(gestionMedecinService));
+            _gestionDossierMedicalService = gestionDossierMedicalService;
+            _gestionConsultationsService = gestionConsultationsService;
             InitializeComponent();
 
             // Applique un thème clair Metro
@@ -33,8 +41,6 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
             StyleMenuStrip(MenuPrincipatl);
             this.Text = "SGCP";
 
-            _gestionPatientService = gestionPatientService ?? throw new ArgumentNullException(nameof(gestionPatientService));
-            _gestionMedecinService = gestionMedecinService ?? throw new ArgumentNullException(nameof(gestionMedecinService));
 
             this.FormClosed += MainForm_FormClosed;
 
@@ -102,26 +108,6 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
             uc.Dock = DockStyle.Fill;                        // uc.Dock = DockStyle.Fill; // Remplir tout l'espace disponible
         }
 
-        // Événements pour charger les UserControls au clic des éléments du menu
-        private void ajouterUnPatientToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-           // LoadUserControl(new UC_Patients());
-        }
-
-        private void consulterUneFichePatientToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //LoadUserControl(new UC_ConsulterFichePatient());
-        }
-
-        private void ajouterUneNouvelleConsultationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //LoadUserControl(new UC_AjouterConsultation());
-        }
-
-        private void consulterUnePrescriptionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //LoadUserControl(new UC_ConsulterPrescription());
-        }
 
         private void gestionDesPatientsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -134,5 +120,16 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
             Application.Exit();
         }
 
+        private void gestionDesConsultationsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var listPatientConsultation = new List_Patient_Consultation(_gestionMedecinService, _gestionPatientService, _gestionDossierMedicalService, _gestionConsultationsService);
+            LoadUserControl(listPatientConsultation);
+        }
+
+        private void gestionDesPrescritptionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var gestionPrescription = new Form_gestion_Prescription(_gestionPatientService,_gestionMedecinService,_gestionConsultationsService);
+            LoadUserControl(gestionPrescription);
+        }
     }
 }

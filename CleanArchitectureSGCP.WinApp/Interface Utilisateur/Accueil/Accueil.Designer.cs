@@ -65,12 +65,14 @@
             gestionDesConsultationsToolStripMenuItem.Name = "gestionDesConsultationsToolStripMenuItem";
             gestionDesConsultationsToolStripMenuItem.Size = new Size(199, 25);
             gestionDesConsultationsToolStripMenuItem.Text = "Gestion des consultations";
+            gestionDesConsultationsToolStripMenuItem.Click += gestionDesConsultationsToolStripMenuItem_Click;
             // 
             // gestionDesPrescritptionToolStripMenuItem
             // 
             gestionDesPrescritptionToolStripMenuItem.Name = "gestionDesPrescritptionToolStripMenuItem";
             gestionDesPrescritptionToolStripMenuItem.Size = new Size(202, 25);
             gestionDesPrescritptionToolStripMenuItem.Text = "Gestion des prescritptions";
+            gestionDesPrescritptionToolStripMenuItem.Click += gestionDesPrescritptionToolStripMenuItem_Click;
             // 
             // PannelPrincipal
             // 

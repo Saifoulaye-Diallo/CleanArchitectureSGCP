@@ -16,7 +16,7 @@ namespace CleanArchitectureSGCP.Core.Entities
         public string Addresse { get; set; }
         public string NumeroTelephones { get; set; }
         public string AddresseCourriel { get; set; }
-        public DossierMedical DossierMedical { get; set; }
+        public virtual DossierMedical DossierMedical { get; set; }
         public Patient() { }
 
         public Patient(string nom, string prenom, DateTime dateDeNaissance, string addresse, string numeroTelephones, string addresseCourriel, DossierMedical dossierMedical)

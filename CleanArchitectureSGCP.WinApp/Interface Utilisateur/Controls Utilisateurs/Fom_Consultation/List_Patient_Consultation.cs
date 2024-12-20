@@ -1,9 +1,6 @@
 ﻿using CleanArchitectureSGCP.Core.Entities;
 using CleanArchitectureSGCP.Core.Interfaces;
-using CleanArchitectureSGCP.Core.Services;
-using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Form_Patient;
 using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.PatientForm;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,35 +11,37 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Patient
+namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Fom_Consultation
 {
-    public partial class ListPatients : UserControl
+    public partial class List_Patient_Consultation : UserControl
     {
         private readonly IGestionMedecinService _gestionMedecinService;
         private readonly IGestionPatientService _gestionPatientService;
+        private readonly IGestionDossierMedicalService _gestionDossierMedicalService;
+        private readonly IGestionConsultationsService _gestionConsultationService;
+        Core.Entities.Patient _patient;
 
-        CleanArchitectureSGCP.Core.Entities.Patient _patient;
-        public ListPatients(IGestionMedecinService gestionMedecinService, IGestionPatientService gestionPatientService)
+        public List_Patient_Consultation(IGestionMedecinService gestionMedecinService, IGestionPatientService gestionPatientService, IGestionDossierMedicalService gestionDossierMedicalService, IGestionConsultationsService gestionConsultationService)
         {
             // Initialisation des dépendances
             _gestionMedecinService = gestionMedecinService;
             _gestionPatientService = gestionPatientService ?? throw new ArgumentNullException(nameof(gestionPatientService));
-
-            // Initialiser les composants
+            _gestionDossierMedicalService = gestionDossierMedicalService;
+            _gestionConsultationService = gestionConsultationService;
             InitializeComponent();
+
+            // Charger les données
+            LoadPatients();
 
             // Configuration du DataGridView
             dtgPatientList.MultiSelect = false;
             dtgPatientList.AutoGenerateColumns = false;
             StyleDataGridView(dtgPatientList);
 
-            // Charger les données
-            LoadPatients();
-
             // Abonner les événements
             dtgPatientList.SelectionChanged += DtgPatientList_SelectionChanged;
-        }
 
+        }
 
         // Charger la liste des patients dans un DataGridView
         private async void LoadPatients()
@@ -59,49 +58,13 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             dtgPatientList.ClearSelection();
         }
 
-        private void btn_ajouter_Click(object sender, EventArgs e)
-        {
-            var addPatientForm = new AddPatient(_gestionMedecinService);
-
-            var result = addPatientForm.ShowDialog();
-
-            if (result == DialogResult.OK)
-            {
-                LoadPatients(); // Recharger les patients après ajout
-                dtgPatientList.ClearSelection();
-            }
-
-        }
-
-        private void btn_Modifier_Click(object sender, EventArgs e)
-        {
-
-            if (_patient != null)
-            {
-                var upDatePatientForm = new UpdatePatient(_gestionPatientService, _patient);
-                var result = upDatePatientForm.ShowDialog();
-
-                // Si l'utilisateur a cliqué sur "Save", rechargez les patients
-                if (result == DialogResult.OK)
-                {
-                    LoadPatients(); // Recharger les patients après ajout
-                    dtgPatientList.ClearSelection();
-                }
-            }
-            else
-            {
-                MessageBox.Show("Selectionnez un patient a modifier !!");
-            }
-
-        }
-
         private void VerifierSelection()
         {
             // Si aucune ligne n'est sélectionnée
             if (dtgPatientList.SelectedRows.Count == 0)
             {
-                btn_consulter.Enabled = false;
-                btn_Modifier.Enabled = false;
+                btn_consulter_historique.Enabled = false;
+                btn_ajouter_consultation.Enabled = false;
                 _patient = null; // Réinitialiser l'objet patient
                 return;
             }
@@ -124,27 +87,45 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             _patient = _patientSelect;
 
             // Activer les boutons
-            btn_consulter.Enabled = true;
-            btn_Modifier.Enabled = true;
+            btn_consulter_historique.Enabled = true;
+            btn_ajouter_consultation.Enabled = true;
         }
+
 
         private void DtgPatientList_SelectionChanged(object sender, EventArgs e)
         {
             VerifierSelection();
         }
 
-        private void btn_consulter_Click(object sender, EventArgs e)
+        private void btn_ajouter_consultation_Click(object sender, EventArgs e)
         {
-            if (_patient != null)
+            var addConsultation = new Add_Consultation(_gestionPatientService, _patient, _gestionDossierMedicalService);
+
+            var result = addConsultation.ShowDialog();
+
+            if (result == DialogResult.OK)
             {
-                var upDatePatientForm = new ViewPatient(_patient);
-                var result = upDatePatientForm.ShowDialog();
+                LoadPatients();
+                dtgPatientList.ClearSelection();
+            }
+        }
+
+        private void btn_consulter_historique_Click(object sender, EventArgs e)
+        {
+            var historyConsultation = new History_Consultation(_patient, _gestionConsultationService);
+
+            var result = historyConsultation.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                LoadPatients();
+                dtgPatientList.ClearSelection();
             }
         }
 
         private void btn_fermer_Click(object sender, EventArgs e)
         {
-            Application.Exit(); 
+            Application.Exit();
         }
     }
 }

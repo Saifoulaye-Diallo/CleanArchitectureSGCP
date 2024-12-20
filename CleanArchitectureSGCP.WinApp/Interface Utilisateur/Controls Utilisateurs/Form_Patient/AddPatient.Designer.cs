@@ -45,6 +45,14 @@
             Telephone = new TextBox();
             Courriel = new TextBox();
             Nom = new TextBox();
+            // Créer une instance de ToolTip
+            ToolTip toolTip = new ToolTip();
+            // Configurer les propriétés
+            toolTip.AutoPopDelay = 5000; // Durée d'affichage (en millisecondes)
+            toolTip.InitialDelay = 200;  // Délai avant d'afficher le ToolTip
+            toolTip.ReshowDelay = 100;   // Délai avant de réafficher si l'utilisateur passe à un autre contrôle
+            toolTip.ShowAlways = true;   // Toujours afficher, même si le formulaire n'est pas actif
+
             PannelPrincipal.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer_ajout).BeginInit();
             splitContainer_ajout.Panel1.SuspendLayout();
@@ -185,6 +193,7 @@
             btn_annuler.TextAlign = ContentAlignment.MiddleRight;
             btn_annuler.UseVisualStyleBackColor = false;
             btn_annuler.Click += btn_annuler_Click;
+            toolTip.SetToolTip(btn_annuler, "Cliquez ici pour annuler l'ajout du patient.");
             // 
             // btn_save
             // 
@@ -203,6 +212,7 @@
             btn_save.TextAlign = ContentAlignment.MiddleRight;
             btn_save.UseVisualStyleBackColor = false;
             btn_save.Click += btn_save_Click;
+            toolTip.SetToolTip(btn_annuler, "Cliquez ici pour enregistrer l'ajout du patient.");
             // 
             // Date
             // 

@@ -121,6 +121,34 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btn_ajouter_consultation.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAB4AAAAZCAYAAAAmNZ4aAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAAU1JREFUSEvt1bFLVnEUxvEPKmXqUGYQhAShi5uT6FKKDkXU4qqLa7kIIYGK4KIu
+        pqAEgkqb4FCBi5ND7i5N2uI/Egd+d/lxX1TwXhDeBx7O8nC/nHPvOZemrtcT9GMg1adoyUNVaBCf8DXV
+        YTzIQ1XoNdawi3W8RXseqkLj2MYhdvARj/JQFWqC7y/4IV5hCG8SoMxf8Aun+I1FvCvJhUcxkva9MwcW
+        eoz3WMBmWpcyH+Mv/qV6gr2SXHgLK5jE8xxYKC5SBFaxn0ZZ5uj0Ale4xB8cleTCB/iGKbzIgYW60hWK
+        0GfMNfB3nOE81eh2viQXnsVMOjrdObBQ3NuO1HkPnjVwTCVgP1OdRm9JLhzPCWC839YceFvd+Vd9UzXB
+        tYHHsIEfaVVi92sBxyVaStDlNIFa/scvE+wDJtCHtjxUhWIf465Hl1Frgd5//QeU4VS7jcNFEAAAAABJ
+        RU5ErkJggg==
+</value>
+  </data>
+  <data name="btn_consulter_historique.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAB4AAAAZCAYAAAAmNZ4aAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        vAAADrwBlbxySQAAAl9JREFUSEvtlcuLjmEYxn9k4xzJwnmQDSP/ABEbG0pMxmkjmSwssFFExNJphiJL
+        MxaSndVsHHJaCbFBDg2FmZRBNuj3dY3e7+2bQ8POd9Vd93vf133dz/u89/O8UEcd1ZgOrAX2Asdie4A1
+        wLQy+W8xCtgC3Ad+Ar/6MXN3gU2pGRZGArOAXcBL4CPwEGgFmoBGYGZM35g5OXKfAy3RUGtIGAdsBG4A
+        n4AreeMpwFhgGbAd2B/TN2adHLnWWKtGc3IDwu90Nqu+lQUoJuYD54FnwDvgXkzf2IVwhDXW3swCzmU+
+        amIecBv4AZwCZhe2aSrwAPgOHAcWAw0xfWPm5MgV1qqhlpp3gAWFfhVI6MqA7CwngYsZIL+b8LueBs7E
+        F+bkyC1DTbXfA3P7ggszDB+AzdX8CsYAvcDjvMWKvN2rmL4xc3K+AKPLItG2x4v05FJW2lZmBnOSlyd8
+        U593xPSNiT4td7AW7GG+3YfV2eYnwKoyE5iYt/KMjgA25Js5sZq+MXNyvqWmDLXtYS97VrZoZbbhDbCu
+        VKDg1TRYn2200eWYvjFzcuRaU4SaatvDXlVne1ESDsG+YgKYAfRE2CEqFuobM9cdbhFqqam2PWrCiesE
+        vgLXgCUZLqHv2faMu/rrMX1jHkU5whp9NdRS888094fJwCHgKfAWOJKbaTwwCdiaY9SRIdHflpwcuUdT
+        q8bhaA4JXvJLgRMZBm8mJ3Y3sDyXjfewd7W+MXNy5FpjrRrD+mFMyM10AHgEfAZeR9xnTd+YOZ8Ppsba
+        fwavSH8KXoNutXYysUG/YR3/F34DJHOkHCtlS04AAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="btn_fermer.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -130,4 +158,7 @@
         rGTKL+AHQsQ9eA5GTPoAAAAASUVORK5CYII=
 </value>
   </data>
+  <metadata name="patientBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>109, 17</value>
+  </metadata>
 </root>

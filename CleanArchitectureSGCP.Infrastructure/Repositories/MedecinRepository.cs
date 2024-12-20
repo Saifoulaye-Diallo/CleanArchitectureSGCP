@@ -15,9 +15,9 @@ namespace CleanArchitectureSGCP.Infrastructure.Repositories
         {
         }
 
-        public Medecin Connexion(string nomUtilisateur, string motDePasse)
+        public async Task<Medecin> ConnexionAdync(string nomUtilisateur, string motDePasse)
         {
-            var medecin = _Sgcpcontext.Medecins.FirstOrDefault(u => u.NomUtilisateur == nomUtilisateur && u.MotDePasse == motDePasse);
+            var medecin = await _Sgcpcontext.Medecins.FirstOrDefaultAsync(u => u.NomUtilisateur == nomUtilisateur && u.MotDePasse == motDePasse);
 
             if (medecin != null)
             {

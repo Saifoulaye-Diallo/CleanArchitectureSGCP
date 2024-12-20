@@ -22,15 +22,11 @@ namespace CleanArchitectureSGCP.Core.Services
             return _consultationRepository.AddAsync(consultation);
         }
 
-        //A Definir
-        public async Task GetPatientConsultationHistory(int id)
+        public async Task<List<Consultation>> GetConsultationsByPatientIdAsync(int patientId)
         {
-            throw new NotImplementedException();
+           return await _consultationRepository.GetConsultationsByPatientIdAsync(patientId);
         }
 
-        public Task GetPatientConsultationHistoryAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

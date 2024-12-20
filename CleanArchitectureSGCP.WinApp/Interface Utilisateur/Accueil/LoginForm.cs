@@ -18,14 +18,16 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
     {
         private readonly IGestionMedecinService _gestionMedecinService;
         private readonly IGestionPatientService _gestionPatientService;
-      
-      
+        private readonly IGestionDossierMedicalService _gestionDossierMedicalService;
+        private readonly IGestionConsultationsService _gestionConsultationsService;
 
-        public LoginForm(IGestionMedecinService gestionMedecinService,IGestionPatientService gestionPatientService)
+        public LoginForm(IGestionMedecinService gestionMedecinService, IGestionPatientService gestionPatientService, IGestionDossierMedicalService gestionDossierMedicalService, IGestionConsultationsService gestionConsultationsService)
         {
-            
+
             _gestionMedecinService = gestionMedecinService;
             _gestionPatientService = gestionPatientService;
+            _gestionDossierMedicalService = gestionDossierMedicalService;
+            _gestionConsultationsService = gestionConsultationsService;
             InitializeComponent();
         }
         private async void Btn_Connexion_Click(object sender, EventArgs e)
@@ -37,15 +39,15 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
                 var nomUtilisateur = TxtUserName.Text;
                 var motDePasse = TxtPassword.Text;
 
-                var resultat = await Task.Run(() => _gestionMedecinService.Connexion(nomUtilisateur, motDePasse));
-               
+                var resultat = await _gestionMedecinService.ConnexionAdync(nomUtilisateur, motDePasse);
+
 
                 if (resultat != null)
                 {
                     if (Session.Instance != null)
                     {
                         // Fermer LoginForm et ouvrir MainForm
-                        var accueil = new Accueil(_gestionPatientService,_gestionMedecinService);
+                        var accueil = new Accueil(_gestionPatientService, _gestionMedecinService, _gestionDossierMedicalService, _gestionConsultationsService);
                         accueil.Show();
 
                         this.Hide(); // Cache LoginForm
@@ -60,7 +62,13 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
             {
                 Btn_Connexion.Enabled = true;
             }
-        
+
+        }
+
+        private void btn_fermer_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            Application.Exit();
         }
     }
 }

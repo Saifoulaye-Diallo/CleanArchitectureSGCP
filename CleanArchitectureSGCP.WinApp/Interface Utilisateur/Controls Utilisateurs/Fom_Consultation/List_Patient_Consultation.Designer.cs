@@ -1,9 +1,8 @@
-﻿using MetroFramework;
-using System.Windows.Forms;
+﻿using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Patient;
 
-namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Patient
+namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Fom_Consultation
 {
-    partial class ListPatients
+    partial class List_Patient_Consultation
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -32,14 +31,14 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ListPatients));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(List_Patient_Consultation));
             panel_Titre = new Panel();
             lbl_GestionPatient = new Label();
+            toolTip = new ToolTip(components);
+            btn_ajouter_consultation = new Button();
+            btn_consulter_historique = new Button();
             pannell_bas_page = new Panel();
             panelBoutons = new Panel();
-            btn_ajouter = new Button();
-            btn_Modifier = new Button();
-            btn_consulter = new Button();
             panel_List = new Panel();
             dtgPatientList = new DataGridView();
             nom = new DataGridViewTextBoxColumn();
@@ -51,7 +50,6 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             courriel = new DataGridViewTextBoxColumn();
             ID = new DataGridViewTextBoxColumn();
             patientBindingSource = new BindingSource(components);
-            toolTip = new ToolTip(components);
             btn_fermer = new Button();
             panel_Titre.SuspendLayout();
             pannell_bas_page.SuspendLayout();
@@ -80,8 +78,53 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             lbl_GestionPatient.Name = "lbl_GestionPatient";
             lbl_GestionPatient.Size = new Size(1226, 38);
             lbl_GestionPatient.TabIndex = 0;
-            lbl_GestionPatient.Text = "Gestion des Patients";
+            lbl_GestionPatient.Text = "Gestion des Consultations";
             lbl_GestionPatient.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // toolTip
+            // 
+            toolTip.AutoPopDelay = 5000;
+            toolTip.InitialDelay = 200;
+            toolTip.ReshowDelay = 100;
+            toolTip.ShowAlways = true;
+            // 
+            // btn_ajouter_consultation
+            // 
+            btn_ajouter_consultation.BackColor = Color.FromArgb(76, 175, 80);
+            btn_ajouter_consultation.FlatAppearance.BorderSize = 0;
+            btn_ajouter_consultation.FlatStyle = FlatStyle.Flat;
+            btn_ajouter_consultation.Font = new Font("Segoe UI", 14F);
+            btn_ajouter_consultation.ForeColor = Color.White;
+            btn_ajouter_consultation.Image = (Image)resources.GetObject("btn_ajouter_consultation.Image");
+            btn_ajouter_consultation.ImageAlign = ContentAlignment.MiddleLeft;
+            btn_ajouter_consultation.Location = new Point(18, 6);
+            btn_ajouter_consultation.Name = "btn_ajouter_consultation";
+            btn_ajouter_consultation.Size = new Size(254, 34);
+            btn_ajouter_consultation.TabIndex = 0;
+            btn_ajouter_consultation.Text = "Ajouter une consultation";
+            btn_ajouter_consultation.TextAlign = ContentAlignment.MiddleRight;
+            toolTip.SetToolTip(btn_ajouter_consultation, "Cliquez ici pour ajouter une nouvelle consultation a la fiche patient selectionnée.");
+            btn_ajouter_consultation.UseVisualStyleBackColor = false;
+            btn_ajouter_consultation.Click += btn_ajouter_consultation_Click;
+            // 
+            // btn_consulter_historique
+            // 
+            btn_consulter_historique.BackColor = Color.FromArgb(33, 150, 243);
+            btn_consulter_historique.FlatAppearance.BorderSize = 0;
+            btn_consulter_historique.FlatStyle = FlatStyle.Flat;
+            btn_consulter_historique.Font = new Font("Segoe UI", 14F);
+            btn_consulter_historique.ForeColor = Color.White;
+            btn_consulter_historique.Image = (Image)resources.GetObject("btn_consulter_historique.Image");
+            btn_consulter_historique.ImageAlign = ContentAlignment.MiddleLeft;
+            btn_consulter_historique.Location = new Point(291, 6);
+            btn_consulter_historique.Name = "btn_consulter_historique";
+            btn_consulter_historique.Size = new Size(227, 34);
+            btn_consulter_historique.TabIndex = 2;
+            btn_consulter_historique.Text = "Consulter historique";
+            btn_consulter_historique.TextAlign = ContentAlignment.MiddleRight;
+            toolTip.SetToolTip(btn_consulter_historique, "Cliquez ici pour consulter l'historique de consultation de la fiche patient selectionnée.");
+            btn_consulter_historique.UseVisualStyleBackColor = false;
+            btn_consulter_historique.Click += btn_consulter_historique_Click;
             // 
             // pannell_bas_page
             // 
@@ -97,71 +140,13 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             // 
             panelBoutons.BackColor = Color.White;
             panelBoutons.Controls.Add(btn_fermer);
-            panelBoutons.Controls.Add(btn_ajouter);
-            panelBoutons.Controls.Add(btn_Modifier);
-            panelBoutons.Controls.Add(btn_consulter);
+            panelBoutons.Controls.Add(btn_ajouter_consultation);
+            panelBoutons.Controls.Add(btn_consulter_historique);
             panelBoutons.Dock = DockStyle.Right;
-            panelBoutons.Location = new Point(606, 0);
+            panelBoutons.Location = new Point(575, 0);
             panelBoutons.Name = "panelBoutons";
-            panelBoutons.Size = new Size(622, 43);
+            panelBoutons.Size = new Size(653, 43);
             panelBoutons.TabIndex = 3;
-            // 
-            // btn_ajouter
-            // 
-            btn_ajouter.BackColor = Color.FromArgb(76, 175, 80);
-            btn_ajouter.FlatAppearance.BorderSize = 0;
-            btn_ajouter.FlatStyle = FlatStyle.Flat;
-            btn_ajouter.Font = new Font("Segoe UI", 14F);
-            btn_ajouter.ForeColor = Color.White;
-            btn_ajouter.Image = (Image)resources.GetObject("btn_ajouter.Image");
-            btn_ajouter.ImageAlign = ContentAlignment.MiddleLeft;
-            btn_ajouter.Location = new Point(20, 6);
-            btn_ajouter.Name = "btn_ajouter";
-            btn_ajouter.Size = new Size(115, 30);
-            btn_ajouter.TabIndex = 0;
-            btn_ajouter.Text = "Ajouter";
-            btn_ajouter.TextAlign = ContentAlignment.MiddleRight;
-            toolTip.SetToolTip(btn_ajouter, "Cliquez ici pour ajouter une nouvelle fiche patient.");
-            btn_ajouter.UseVisualStyleBackColor = false;
-            btn_ajouter.Click += btn_ajouter_Click;
-            // 
-            // btn_Modifier
-            // 
-            btn_Modifier.BackColor = Color.FromArgb(255, 152, 0);
-            btn_Modifier.FlatAppearance.BorderSize = 0;
-            btn_Modifier.FlatStyle = FlatStyle.Flat;
-            btn_Modifier.Font = new Font("Segoe UI", 14F);
-            btn_Modifier.ForeColor = Color.White;
-            btn_Modifier.Image = (Image)resources.GetObject("btn_Modifier.Image");
-            btn_Modifier.ImageAlign = ContentAlignment.MiddleLeft;
-            btn_Modifier.Location = new Point(180, 6);
-            btn_Modifier.Name = "btn_Modifier";
-            btn_Modifier.Size = new Size(120, 30);
-            btn_Modifier.TabIndex = 1;
-            btn_Modifier.Text = "Modifier";
-            btn_Modifier.TextAlign = ContentAlignment.MiddleRight;
-            toolTip.SetToolTip(btn_Modifier, "Cliquez ici pour modifier la fiche patient selectionnée.");
-            btn_Modifier.UseVisualStyleBackColor = false;
-            btn_Modifier.Click += btn_Modifier_Click;
-            // 
-            // btn_consulter
-            // 
-            btn_consulter.BackColor = Color.FromArgb(33, 150, 243);
-            btn_consulter.FlatAppearance.BorderSize = 0;
-            btn_consulter.FlatStyle = FlatStyle.Flat;
-            btn_consulter.Font = new Font("Segoe UI", 14F);
-            btn_consulter.ForeColor = Color.White;
-            btn_consulter.Image = (Image)resources.GetObject("btn_consulter.Image");
-            btn_consulter.ImageAlign = ContentAlignment.MiddleLeft;
-            btn_consulter.Location = new Point(340, 6);
-            btn_consulter.Name = "btn_consulter";
-            btn_consulter.Size = new Size(135, 30);
-            btn_consulter.TabIndex = 2;
-            btn_consulter.Text = "Consulter";
-            btn_consulter.TextAlign = ContentAlignment.MiddleRight;
-            toolTip.SetToolTip(btn_consulter, "Cliquez ici pour consulter la fiche du patient selectionnée.");
-            btn_consulter.UseVisualStyleBackColor = false;
-            btn_consulter.Click += btn_consulter_Click;
             // 
             // panel_List
             // 
@@ -245,13 +230,6 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             // 
             patientBindingSource.DataSource = typeof(Core.Entities.Patient);
             // 
-            // toolTip
-            // 
-            toolTip.AutoPopDelay = 5000;
-            toolTip.InitialDelay = 200;
-            toolTip.ReshowDelay = 100;
-            toolTip.ShowAlways = true;
-            // 
             // btn_fermer
             // 
             btn_fermer.BackColor = Color.FromArgb(255, 82, 82);
@@ -261,9 +239,9 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             btn_fermer.ForeColor = Color.White;
             btn_fermer.Image = (Image)resources.GetObject("btn_fermer.Image");
             btn_fermer.ImageAlign = ContentAlignment.MiddleLeft;
-            btn_fermer.Location = new Point(512, 6);
+            btn_fermer.Location = new Point(537, 6);
             btn_fermer.Name = "btn_fermer";
-            btn_fermer.Size = new Size(107, 30);
+            btn_fermer.Size = new Size(107, 35);
             btn_fermer.TabIndex = 3;
             btn_fermer.Text = "Fermer";
             btn_fermer.TextAlign = ContentAlignment.MiddleRight;
@@ -271,14 +249,14 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             btn_fermer.UseVisualStyleBackColor = false;
             btn_fermer.Click += btn_fermer_Click;
             // 
-            // ListPatients
+            // List_Patient_Consultation
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel_List);
             Controls.Add(pannell_bas_page);
             Controls.Add(panel_Titre);
-            Name = "ListPatients";
+            Name = "List_Patient_Consultation";
             Size = new Size(1228, 707);
             panel_Titre.ResumeLayout(false);
             pannell_bas_page.ResumeLayout(false);
@@ -342,10 +320,9 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
         private Label lbl_GestionPatient;
         private DataGridView dtgPatientList;
         private BindingSource patientBindingSource;
-        private Button btn_consulter;
+        private Button btn_consulter_historique;
         private Panel panelBoutons;
-        private Button btn_ajouter;
-        private Button btn_Modifier;
+        private Button btn_ajouter_consultation;
         private DataGridViewTextBoxColumn nom;
         private DataGridViewTextBoxColumn Dossier;
         private DataGridViewTextBoxColumn prenom;
@@ -354,7 +331,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
         private DataGridViewTextBoxColumn telephone;
         private DataGridViewTextBoxColumn courriel;
         private DataGridViewTextBoxColumn ID;
-        private Button btn_fermer;
         private ToolTip toolTip;
+        private Button btn_fermer;
     }
 }

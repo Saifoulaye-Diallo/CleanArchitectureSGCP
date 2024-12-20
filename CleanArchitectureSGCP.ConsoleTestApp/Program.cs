@@ -13,12 +13,48 @@ class Program
     {
 
         Console.WriteLine("Bienvenue ");
-        UpdatePatient();
+        GetConsultation();
         Console.WriteLine("Appuyez sur une touche pour terminer...");
         Console.ReadKey();
         //AddPatientAsync();
     }
+    private static async void GetDossier()
+    {
+        using (var context = new SGCPContext())
+        {
+            IDossierMedical dossierMedical = new DossierMedicalRepository(context);
+            IGestionDossierMedicalService _sevice = new GestionDossierMedicalService(dossierMedical);
 
+            DossierMedical dm = await dossierMedical.GetDossierMedicalByPatientIdAsync(48);
+
+            Console.WriteLine($"{dm.Id}");
+        }
+    }
+
+    public async static void GetConsultation()
+    {
+        using (var context = new SGCPContext())
+        {
+            IConsultation iconsultation = new ConsultationRepository(context);
+            IGestionConsultationsService _sevice = new GestionConsultationService(iconsultation);
+            int patientId = 48; // ID du patient
+            var consultations = await _sevice.GetConsultationsByPatientIdAsync(patientId);
+
+            if (consultations.Any())
+            {
+                Console.WriteLine("Consultations trouvées :");
+                foreach (var consultation in consultations)
+                {
+                    Console.WriteLine($"- {consultation.Date.ToShortDateString()}: {consultation.Diagnostic}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Aucune consultation trouvée pour ce patient.");
+            }
+
+        }
+    }
     public static async void ajout()
     {
         using (var context = new SGCPContext())
