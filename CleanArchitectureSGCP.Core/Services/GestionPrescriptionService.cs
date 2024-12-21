@@ -22,14 +22,19 @@ namespace CleanArchitectureSGCP.Core.Services
              return _prescriptionRepository.AddAsync(prescription);
         }
 
-        public Task GetPrescriptionByIdAsync(int id)
+        public async Task<Prescription> GetPrescriptionByIdAsync(int id)
         {
-             return _prescriptionRepository.GetByIdAsync(id);
+             return await _prescriptionRepository.GetByIdAsync(id);
         }
 
-        public Task UpdatePrescriptionAsync(Prescription prescription)
+        public Task<List<Prescription>> GetPrescriptionsByConsultationIdAsync(int consultationId)
         {
-           return _prescriptionRepository.UpdateAsync(prescription);
+            return _prescriptionRepository.GetPrescriptionsByConsultationIdAsync(consultationId);
+        }
+
+        public async Task UpdatePrescriptionAsync(Prescription prescription)
+        {
+           await _prescriptionRepository.UpdateAsync(prescription);
         }
     }
 }

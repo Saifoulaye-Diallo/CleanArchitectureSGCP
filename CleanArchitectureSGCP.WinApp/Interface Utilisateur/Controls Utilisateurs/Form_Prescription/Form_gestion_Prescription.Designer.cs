@@ -1,4 +1,5 @@
-﻿using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Patient;
+﻿using CleanArchitectureSGCP.Core.Entities;
+using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Patient;
 
 namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
 {
@@ -51,12 +52,12 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             panel4 = new Panel();
             panel3 = new Panel();
             dtgConsultationHistorytList = new DataGridView();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            IDConsultation = new DataGridViewTextBoxColumn();
             Motif = new DataGridViewTextBoxColumn();
             Date = new DataGridViewTextBoxColumn();
             Observation = new DataGridViewTextBoxColumn();
             Diagnostic = new DataGridViewTextBoxColumn();
-            DossierId = new DataGridViewTextBoxColumn();
+            DossierMedicalId = new DataGridViewTextBoxColumn();
             SessionId = new DataGridViewTextBoxColumn();
             panel2 = new Panel();
             label2 = new Label();
@@ -77,11 +78,39 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             pannell_bas_page = new Panel();
             panel5 = new Panel();
             button1 = new Button();
-            btn_prescription = new Button();
+            btn_prescriptions = new Button();
+            tabPrescription = new TabPage();
+            dtgListePrescription = new DataGridView();
+            IDE = new DataGridViewTextBoxColumn();
+            Medicament = new DataGridViewTextBoxColumn();
+            Dosage = new DataGridViewTextBoxColumn();
+            Instruction = new DataGridViewTextBoxColumn();
+            Duree = new DataGridViewTextBoxColumn();
+            ConsultationId = new DataGridViewTextBoxColumn();
+            etat = new DataGridViewTextBoxColumn();
+            panel7 = new Panel();
+            panel8 = new Panel();
+            button2 = new Button();
+            btn_ajouter_prescription = new Button();
+            btn_cloturer_prescription = new Button();
+            btn_consulter_prescription = new Button();
+            panel6 = new Panel();
+            label3 = new Label();
+            panel_consultation_prescription = new Panel();
+            TxtDateConsultation = new Label();
+            TxtDiagnostic = new Label();
+            TxtObservation = new Label();
+            TxtMotif = new Label();
+            label9 = new Label();
+            label_Date = new Label();
+            label_observation = new Label();
+            label_ob = new Label();
+            lable_Motif = new Label();
             patientBindingSource = new BindingSource(components);
             toolTip = new ToolTip(components);
             bindingSource1 = new BindingSource(components);
             toolTip1 = new ToolTip(components);
+            test = new DataGridViewTextBoxColumn();
             panel_Titre.SuspendLayout();
             panel_List.SuspendLayout();
             tabControlGestionPrescription.SuspendLayout();
@@ -99,6 +128,12 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             panel1.SuspendLayout();
             pannell_bas_page.SuspendLayout();
             panel5.SuspendLayout();
+            tabPrescription.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dtgListePrescription).BeginInit();
+            panel7.SuspendLayout();
+            panel8.SuspendLayout();
+            panel6.SuspendLayout();
+            panel_consultation_prescription.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)patientBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             SuspendLayout();
@@ -139,6 +174,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             tabControlGestionPrescription.Appearance = TabAppearance.Buttons;
             tabControlGestionPrescription.Controls.Add(tablistePatients);
             tabControlGestionPrescription.Controls.Add(tabConsultation);
+            tabControlGestionPrescription.Controls.Add(tabPrescription);
             tabControlGestionPrescription.Dock = DockStyle.Fill;
             tabControlGestionPrescription.DrawMode = TabDrawMode.OwnerDrawFixed;
             tabControlGestionPrescription.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
@@ -150,6 +186,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             tabControlGestionPrescription.SizeMode = TabSizeMode.Fixed;
             tabControlGestionPrescription.TabIndex = 0;
             tabControlGestionPrescription.DrawItem += TabControlGestionPrescription_DrawItem;
+            tabControlGestionPrescription.Selecting += DisableTabPrescription;
             // 
             // tablistePatients
             // 
@@ -163,7 +200,6 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             tablistePatients.Size = new Size(1220, 629);
             tablistePatients.TabIndex = 0;
             tablistePatients.Text = "Patients";
-            tablistePatients.Click += tablistePatients_Click;
             // 
             // panel_principal
             // 
@@ -183,9 +219,11 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             dtgPatientList.Dock = DockStyle.Fill;
             dtgPatientList.GridColor = Color.WhiteSmoke;
             dtgPatientList.Location = new Point(0, 0);
+            dtgPatientList.MultiSelect = false;
             dtgPatientList.Name = "dtgPatientList";
             dtgPatientList.Size = new Size(1214, 544);
             dtgPatientList.TabIndex = 1;
+            dtgPatientList.CellClick += dtgPaitentList_CellClick;
             // 
             // nom
             // 
@@ -359,7 +397,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             dtgConsultationHistorytList.AllowUserToDeleteRows = false;
             dtgConsultationHistorytList.BackgroundColor = Color.White;
             dtgConsultationHistorytList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dtgConsultationHistorytList.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, Motif, Date, Observation, Diagnostic, DossierId, SessionId });
+            dtgConsultationHistorytList.Columns.AddRange(new DataGridViewColumn[] { IDConsultation, Motif, Date, Observation, Diagnostic, DossierMedicalId, SessionId });
             dtgConsultationHistorytList.Dock = DockStyle.Fill;
             dtgConsultationHistorytList.GridColor = Color.WhiteSmoke;
             dtgConsultationHistorytList.Location = new Point(0, 0);
@@ -367,14 +405,15 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             dtgConsultationHistorytList.ReadOnly = true;
             dtgConsultationHistorytList.Size = new Size(1214, 415);
             dtgConsultationHistorytList.TabIndex = 0;
+            dtgConsultationHistorytList.CellClick += dtgConulationtList_CellClick;
             // 
-            // dataGridViewTextBoxColumn1
+            // IDConsultation
             // 
-            dataGridViewTextBoxColumn1.DataPropertyName = "Id";
-            dataGridViewTextBoxColumn1.HeaderText = "ID";
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.ReadOnly = true;
-            dataGridViewTextBoxColumn1.Visible = false;
+            IDConsultation.DataPropertyName = "Id";
+            IDConsultation.HeaderText = "ID";
+            IDConsultation.Name = "IDConsultation";
+            IDConsultation.ReadOnly = true;
+            IDConsultation.Visible = false;
             // 
             // Motif
             // 
@@ -404,18 +443,18 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             Diagnostic.Name = "Diagnostic";
             Diagnostic.ReadOnly = true;
             // 
-            // DossierId
+            // DossierMedicalId
             // 
-            DossierId.DataPropertyName = "DossierMedicalId";
-            DossierId.HeaderText = "DossierId";
-            DossierId.Name = "DossierId";
-            DossierId.ReadOnly = true;
-            DossierId.Visible = false;
+            DossierMedicalId.DataPropertyName = "DossierMedicalId";
+            DossierMedicalId.HeaderText = "DossierMedicalId";
+            DossierMedicalId.Name = "DossierMedicalId";
+            DossierMedicalId.ReadOnly = true;
+            DossierMedicalId.Visible = false;
             // 
             // SessionId
             // 
             SessionId.DataPropertyName = "SessionId";
-            SessionId.HeaderText = "SessionIdSessionId";
+            SessionId.HeaderText = "SessionId";
             SessionId.Name = "SessionId";
             SessionId.ReadOnly = true;
             SessionId.Visible = false;
@@ -634,7 +673,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             // 
             panel5.BackColor = Color.White;
             panel5.Controls.Add(button1);
-            panel5.Controls.Add(btn_prescription);
+            panel5.Controls.Add(btn_prescriptions);
             panel5.Dock = DockStyle.Right;
             panel5.Location = new Point(879, 0);
             panel5.Name = "panel5";
@@ -658,28 +697,365 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             button1.TextAlign = ContentAlignment.MiddleRight;
             toolTip.SetToolTip(button1, "Cliquez ici pour enregistrer l'ajout de la nouvelle consultation.");
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
-            // btn_prescription
+            // btn_prescriptions
             // 
-            btn_prescription.BackColor = Color.FromArgb(33, 150, 243);
-            btn_prescription.FlatAppearance.BorderSize = 0;
-            btn_prescription.FlatStyle = FlatStyle.Flat;
-            btn_prescription.Font = new Font("Segoe UI", 14F);
-            btn_prescription.ForeColor = Color.White;
-            btn_prescription.Image = (Image)resources.GetObject("btn_prescription.Image");
-            btn_prescription.ImageAlign = ContentAlignment.MiddleLeft;
-            btn_prescription.Location = new Point(24, 6);
-            btn_prescription.Name = "btn_prescription";
-            btn_prescription.Size = new Size(173, 33);
-            btn_prescription.TabIndex = 2;
-            btn_prescription.Text = "Prescription....";
-            btn_prescription.TextAlign = ContentAlignment.MiddleRight;
-            toolTip.SetToolTip(btn_prescription, "Cliquez ici pour consulter la fiche du patient selectionnée.");
-            btn_prescription.UseVisualStyleBackColor = false;
+            btn_prescriptions.BackColor = Color.FromArgb(33, 150, 243);
+            btn_prescriptions.FlatAppearance.BorderSize = 0;
+            btn_prescriptions.FlatStyle = FlatStyle.Flat;
+            btn_prescriptions.Font = new Font("Segoe UI", 14F);
+            btn_prescriptions.ForeColor = Color.White;
+            btn_prescriptions.Image = (Image)resources.GetObject("btn_prescriptions.Image");
+            btn_prescriptions.ImageAlign = ContentAlignment.MiddleLeft;
+            btn_prescriptions.Location = new Point(24, 6);
+            btn_prescriptions.Name = "btn_prescriptions";
+            btn_prescriptions.Size = new Size(173, 33);
+            btn_prescriptions.TabIndex = 2;
+            btn_prescriptions.Text = "Prescription....";
+            btn_prescriptions.TextAlign = ContentAlignment.MiddleRight;
+            toolTip.SetToolTip(btn_prescriptions, "Cliquez ici pour consulter la fiche du patient selectionnée.");
+            btn_prescriptions.UseVisualStyleBackColor = false;
+            btn_prescriptions.Click += btn_prescription_Click;
+            // 
+            // tabPrescription
+            // 
+            tabPrescription.Controls.Add(dtgListePrescription);
+            tabPrescription.Controls.Add(panel7);
+            tabPrescription.Controls.Add(panel6);
+            tabPrescription.Controls.Add(panel_consultation_prescription);
+            tabPrescription.Location = new Point(4, 34);
+            tabPrescription.Name = "tabPrescription";
+            tabPrescription.Padding = new Padding(3);
+            tabPrescription.Size = new Size(1220, 629);
+            tabPrescription.TabIndex = 3;
+            tabPrescription.Text = "Presciptions";
+            tabPrescription.UseVisualStyleBackColor = true;
+            // 
+            // dtgListePrescription
+            // 
+            dtgListePrescription.AllowUserToAddRows = false;
+            dtgListePrescription.AllowUserToDeleteRows = false;
+            dtgListePrescription.BackgroundColor = Color.White;
+            dtgListePrescription.BorderStyle = BorderStyle.Fixed3D;
+            dtgListePrescription.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dtgListePrescription.Columns.AddRange(new DataGridViewColumn[] { IDE, Medicament, Dosage, Instruction, Duree, ConsultationId, etat });
+            dtgListePrescription.Dock = DockStyle.Fill;
+            dtgListePrescription.GridColor = Color.WhiteSmoke;
+            dtgListePrescription.Location = new Point(3, 168);
+            dtgListePrescription.MultiSelect = false;
+            dtgListePrescription.Name = "dtgListePrescription";
+            dtgListePrescription.ReadOnly = true;
+            dtgListePrescription.Size = new Size(1214, 415);
+            dtgListePrescription.TabIndex = 7;
+            dtgListePrescription.CellClick += dtgPrescriptionList_CellClick;
+            dtgListePrescription.CellFormatting += ConvertEtat;
+            // 
+            // IDE
+            // 
+            IDE.DataPropertyName = "Id";
+            IDE.HeaderText = "Id";
+            IDE.Name = "IDE";
+            IDE.ReadOnly = true;
+            IDE.Visible = false;
+            // 
+            // Medicament
+            // 
+            Medicament.DataPropertyName = "Medicament";
+            Medicament.HeaderText = "Medicament";
+            Medicament.Name = "Medicament";
+            Medicament.ReadOnly = true;
+            // 
+            // Dosage
+            // 
+            Dosage.DataPropertyName = "Dosage";
+            Dosage.HeaderText = "Dosage";
+            Dosage.Name = "Dosage";
+            Dosage.ReadOnly = true;
+            // 
+            // Instruction
+            // 
+            Instruction.DataPropertyName = "Instruction";
+            Instruction.HeaderText = "Instruction";
+            Instruction.Name = "Instruction";
+            Instruction.ReadOnly = true;
+            // 
+            // Duree
+            // 
+            Duree.DataPropertyName = "Duree";
+            Duree.HeaderText = "Duree";
+            Duree.Name = "Duree";
+            Duree.ReadOnly = true;
+            // 
+            // ConsultationId
+            // 
+            ConsultationId.DataPropertyName = "ConsultationId";
+            ConsultationId.HeaderText = "ConsultationId";
+            ConsultationId.Name = "ConsultationId";
+            ConsultationId.ReadOnly = true;
+            ConsultationId.Visible = false;
+            // 
+            // etat
+            // 
+            etat.DataPropertyName = "etat";
+            etat.HeaderText = "Etat";
+            etat.Name = "etat";
+            etat.ReadOnly = true;
+            // 
+            // panel7
+            // 
+            panel7.BackColor = Color.White;
+            panel7.Controls.Add(panel8);
+            panel7.Dock = DockStyle.Bottom;
+            panel7.Location = new Point(3, 583);
+            panel7.Name = "panel7";
+            panel7.Size = new Size(1214, 43);
+            panel7.TabIndex = 6;
+            // 
+            // panel8
+            // 
+            panel8.BackColor = Color.White;
+            panel8.Controls.Add(button2);
+            panel8.Controls.Add(btn_ajouter_prescription);
+            panel8.Controls.Add(btn_cloturer_prescription);
+            panel8.Controls.Add(btn_consulter_prescription);
+            panel8.Dock = DockStyle.Right;
+            panel8.Location = new Point(592, 0);
+            panel8.Name = "panel8";
+            panel8.Size = new Size(622, 43);
+            panel8.TabIndex = 4;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.FromArgb(255, 82, 82);
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            button2.ForeColor = Color.White;
+            button2.Image = (Image)resources.GetObject("button2.Image");
+            button2.ImageAlign = ContentAlignment.MiddleLeft;
+            button2.Location = new Point(512, 6);
+            button2.Name = "button2";
+            button2.Size = new Size(107, 30);
+            button2.TabIndex = 3;
+            button2.Text = "Fermer";
+            button2.TextAlign = ContentAlignment.MiddleRight;
+            toolTip.SetToolTip(button2, "Cliquez ici pour enregistrer l'ajout de la nouvelle consultation.");
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
+            // 
+            // btn_ajouter_prescription
+            // 
+            btn_ajouter_prescription.BackColor = Color.FromArgb(76, 175, 80);
+            btn_ajouter_prescription.FlatAppearance.BorderSize = 0;
+            btn_ajouter_prescription.FlatStyle = FlatStyle.Flat;
+            btn_ajouter_prescription.Font = new Font("Segoe UI", 14F);
+            btn_ajouter_prescription.ForeColor = Color.White;
+            btn_ajouter_prescription.Image = (Image)resources.GetObject("btn_ajouter_prescription.Image");
+            btn_ajouter_prescription.ImageAlign = ContentAlignment.MiddleLeft;
+            btn_ajouter_prescription.Location = new Point(20, 6);
+            btn_ajouter_prescription.Name = "btn_ajouter_prescription";
+            btn_ajouter_prescription.Size = new Size(115, 30);
+            btn_ajouter_prescription.TabIndex = 0;
+            btn_ajouter_prescription.Text = "Ajouter";
+            btn_ajouter_prescription.TextAlign = ContentAlignment.MiddleRight;
+            toolTip.SetToolTip(btn_ajouter_prescription, "Cliquez ici pour ajouter une nouvelle prescription");
+            btn_ajouter_prescription.UseVisualStyleBackColor = false;
+            btn_ajouter_prescription.Click += btn_ajouter_prescription_Click;
+            // 
+            // btn_cloturer_prescription
+            // 
+            btn_cloturer_prescription.BackColor = Color.FromArgb(255, 152, 0);
+            btn_cloturer_prescription.FlatAppearance.BorderSize = 0;
+            btn_cloturer_prescription.FlatStyle = FlatStyle.Flat;
+            btn_cloturer_prescription.Font = new Font("Segoe UI", 14F);
+            btn_cloturer_prescription.ForeColor = Color.White;
+            btn_cloturer_prescription.Image = (Image)resources.GetObject("btn_cloturer_prescription.Image");
+            btn_cloturer_prescription.ImageAlign = ContentAlignment.MiddleLeft;
+            btn_cloturer_prescription.Location = new Point(180, 6);
+            btn_cloturer_prescription.Name = "btn_cloturer_prescription";
+            btn_cloturer_prescription.Size = new Size(120, 30);
+            btn_cloturer_prescription.TabIndex = 1;
+            btn_cloturer_prescription.Text = "Cloturer";
+            btn_cloturer_prescription.TextAlign = ContentAlignment.MiddleRight;
+            toolTip.SetToolTip(btn_cloturer_prescription, "Cliquer ici pour cloturer la prescription selectionnee");
+            btn_cloturer_prescription.UseVisualStyleBackColor = false;
+            btn_cloturer_prescription.Click += btn_cloturer_prescription_Click;
+            // 
+            // btn_consulter_prescription
+            // 
+            btn_consulter_prescription.BackColor = Color.FromArgb(33, 150, 243);
+            btn_consulter_prescription.FlatAppearance.BorderSize = 0;
+            btn_consulter_prescription.FlatStyle = FlatStyle.Flat;
+            btn_consulter_prescription.Font = new Font("Segoe UI", 14F);
+            btn_consulter_prescription.ForeColor = Color.White;
+            btn_consulter_prescription.Image = (Image)resources.GetObject("btn_consulter_prescription.Image");
+            btn_consulter_prescription.ImageAlign = ContentAlignment.MiddleLeft;
+            btn_consulter_prescription.Location = new Point(340, 6);
+            btn_consulter_prescription.Name = "btn_consulter_prescription";
+            btn_consulter_prescription.Size = new Size(135, 30);
+            btn_consulter_prescription.TabIndex = 2;
+            btn_consulter_prescription.Text = "Consulter";
+            btn_consulter_prescription.TextAlign = ContentAlignment.MiddleRight;
+            toolTip.SetToolTip(btn_consulter_prescription, "Cliquez ici pour consulter la prescription selectionnée.");
+            btn_consulter_prescription.UseVisualStyleBackColor = false;
+            btn_consulter_prescription.Click += btn_consulter_prescription_Click;
+            // 
+            // panel6
+            // 
+            panel6.BackColor = SystemColors.ControlLightLight;
+            panel6.Controls.Add(label3);
+            panel6.Dock = DockStyle.Top;
+            panel6.Location = new Point(3, 135);
+            panel6.Name = "panel6";
+            panel6.Size = new Size(1214, 33);
+            panel6.TabIndex = 3;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Location = new Point(9, 3);
+            label3.Name = "label3";
+            label3.Size = new Size(208, 25);
+            label3.TabIndex = 22;
+            label3.Text = "Liste des prescriptions";
+            // 
+            // panel_consultation_prescription
+            // 
+            panel_consultation_prescription.BackColor = SystemColors.ControlLightLight;
+            panel_consultation_prescription.Controls.Add(TxtDateConsultation);
+            panel_consultation_prescription.Controls.Add(TxtDiagnostic);
+            panel_consultation_prescription.Controls.Add(TxtObservation);
+            panel_consultation_prescription.Controls.Add(TxtMotif);
+            panel_consultation_prescription.Controls.Add(label9);
+            panel_consultation_prescription.Controls.Add(label_Date);
+            panel_consultation_prescription.Controls.Add(label_observation);
+            panel_consultation_prescription.Controls.Add(label_ob);
+            panel_consultation_prescription.Controls.Add(lable_Motif);
+            panel_consultation_prescription.Dock = DockStyle.Top;
+            panel_consultation_prescription.Location = new Point(3, 3);
+            panel_consultation_prescription.Name = "panel_consultation_prescription";
+            panel_consultation_prescription.Size = new Size(1214, 132);
+            panel_consultation_prescription.TabIndex = 2;
+            // 
+            // TxtDateConsultation
+            // 
+            TxtDateConsultation.AutoSize = true;
+            TxtDateConsultation.BackColor = Color.Transparent;
+            TxtDateConsultation.Font = new Font("Segoe UI", 9.75F);
+            TxtDateConsultation.ForeColor = Color.Black;
+            TxtDateConsultation.Location = new Point(58, 45);
+            TxtDateConsultation.Name = "TxtDateConsultation";
+            TxtDateConsultation.Size = new Size(35, 17);
+            TxtDateConsultation.TabIndex = 22;
+            TxtDateConsultation.Text = "Date";
+            TxtDateConsultation.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // TxtDiagnostic
+            // 
+            TxtDiagnostic.AutoSize = true;
+            TxtDiagnostic.BackColor = Color.Transparent;
+            TxtDiagnostic.Font = new Font("Segoe UI", 9.75F);
+            TxtDiagnostic.ForeColor = Color.Black;
+            TxtDiagnostic.Location = new Point(93, 95);
+            TxtDiagnostic.Name = "TxtDiagnostic";
+            TxtDiagnostic.Size = new Size(69, 17);
+            TxtDiagnostic.TabIndex = 23;
+            TxtDiagnostic.Text = "Diagnostic";
+            TxtDiagnostic.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // TxtObservation
+            // 
+            TxtObservation.AutoSize = true;
+            TxtObservation.BackColor = Color.Transparent;
+            TxtObservation.Font = new Font("Segoe UI", 9.75F);
+            TxtObservation.ForeColor = Color.Black;
+            TxtObservation.Location = new Point(525, 95);
+            TxtObservation.Name = "TxtObservation";
+            TxtObservation.Size = new Size(19, 17);
+            TxtObservation.TabIndex = 26;
+            TxtObservation.Text = "Id";
+            TxtObservation.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // TxtMotif
+            // 
+            TxtMotif.AutoSize = true;
+            TxtMotif.BackColor = Color.Transparent;
+            TxtMotif.Font = new Font("Segoe UI", 9.75F);
+            TxtMotif.ForeColor = Color.Black;
+            TxtMotif.Location = new Point(472, 45);
+            TxtMotif.Name = "TxtMotif";
+            TxtMotif.Size = new Size(39, 17);
+            TxtMotif.TabIndex = 25;
+            TxtMotif.Text = "Motif";
+            TxtMotif.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label9.Location = new Point(9, 4);
+            label9.Name = "label9";
+            label9.Size = new Size(237, 25);
+            label9.TabIndex = 14;
+            label9.Text = "Details de la Consultation";
+            // 
+            // label_Date
+            // 
+            label_Date.AutoSize = true;
+            label_Date.BackColor = Color.Transparent;
+            label_Date.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            label_Date.ForeColor = Color.Black;
+            label_Date.Location = new Point(9, 45);
+            label_Date.Name = "label_Date";
+            label_Date.Size = new Size(43, 17);
+            label_Date.TabIndex = 15;
+            label_Date.Text = "Date :";
+            label_Date.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // label_observation
+            // 
+            label_observation.AutoSize = true;
+            label_observation.BackColor = Color.Transparent;
+            label_observation.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            label_observation.ForeColor = Color.Black;
+            label_observation.Location = new Point(9, 95);
+            label_observation.Name = "label_observation";
+            label_observation.Size = new Size(78, 17);
+            label_observation.TabIndex = 16;
+            label_observation.Text = "Diagnostic :";
+            label_observation.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // label_ob
+            // 
+            label_ob.AutoSize = true;
+            label_ob.BackColor = Color.Transparent;
+            label_ob.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            label_ob.ForeColor = Color.Black;
+            label_ob.Location = new Point(419, 95);
+            label_ob.Name = "label_ob";
+            label_ob.Size = new Size(100, 17);
+            label_ob.TabIndex = 19;
+            label_ob.Text = "Observations : ";
+            label_ob.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // lable_Motif
+            // 
+            lable_Motif.AutoSize = true;
+            lable_Motif.BackColor = Color.Transparent;
+            lable_Motif.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold);
+            lable_Motif.ForeColor = Color.Black;
+            lable_Motif.Location = new Point(419, 45);
+            lable_Motif.Name = "lable_Motif";
+            lable_Motif.Size = new Size(47, 17);
+            lable_Motif.TabIndex = 18;
+            lable_Motif.Text = "Motif :";
+            lable_Motif.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // patientBindingSource
             // 
-            patientBindingSource.DataSource = typeof(Core.Entities.Patient);
+            patientBindingSource.DataSource = typeof(Patient);
             // 
             // toolTip
             // 
@@ -694,6 +1070,12 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             toolTip1.InitialDelay = 200;
             toolTip1.ReshowDelay = 100;
             toolTip1.ShowAlways = true;
+            // 
+            // test
+            // 
+            test.HeaderText = "Column1";
+            test.Name = "test";
+            test.ReadOnly = true;
             // 
             // Form_gestion_Prescription
             // 
@@ -722,6 +1104,14 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             panel1.PerformLayout();
             pannell_bas_page.ResumeLayout(false);
             panel5.ResumeLayout(false);
+            tabPrescription.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dtgListePrescription).EndInit();
+            panel7.ResumeLayout(false);
+            panel8.ResumeLayout(false);
+            panel6.ResumeLayout(false);
+            panel6.PerformLayout();
+            panel_consultation_prescription.ResumeLayout(false);
+            panel_consultation_prescription.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)patientBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
             ResumeLayout(false);
@@ -729,6 +1119,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
 
         private void StyleDataGridView(DataGridView dgv)
         {
+          
             // Style général
             dgv.BackgroundColor = Color.White;
             dgv.BorderStyle = BorderStyle.Fixed3D;
@@ -770,6 +1161,8 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             // Suppression de l'affichage de la ligne d'ajout
             dgv.AllowUserToAddRows = false;
             dgv.AllowUserToResizeRows = false;
+
+            dgv.AutoGenerateColumns = false;
         }
         private void TabControlGestionPrescription_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -835,13 +1228,6 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
         private Panel panel4;
         private Panel panel3;
         private DataGridView dtgConsultationHistorytList;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn Motif;
-        private DataGridViewTextBoxColumn Date;
-        private DataGridViewTextBoxColumn Observation;
-        private DataGridViewTextBoxColumn Diagnostic;
-        private DataGridViewTextBoxColumn DossierId;
-        private DataGridViewTextBoxColumn SessionId;
         private Panel panel2;
         private Label label2;
         private Panel panel1;
@@ -863,6 +1249,41 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
         private ToolTip toolTip1;
         private Panel panel5;
         private Button button1;
-        private Button btn_prescription;
+        private Button btn_prescriptions;
+        private TabPage tabPrescription;
+        private Panel panel_consultation_prescription;
+        private Label TxtDateConsultation;
+        private Label TxtDiagnostic;
+        private Label TxtObservation;
+        private Label TxtMotif;
+        private Label label9;
+        private Label label_Date;
+        private Label label_observation;
+        private Label label_ob;
+        private Label lable_Motif;
+        private Panel panel7;
+        private Panel panel6;
+        private Label label3;
+        private DataGridView dtgListePrescription;
+        private Panel panel8;
+        private Button button2;
+        private Button btn_ajouter_prescription;
+        private Button btn_cloturer_prescription;
+        private Button btn_consulter_prescription;
+        private DataGridViewTextBoxColumn test;
+        private DataGridViewTextBoxColumn IDConsultation;
+        private DataGridViewTextBoxColumn Motif;
+        private DataGridViewTextBoxColumn Date;
+        private DataGridViewTextBoxColumn Observation;
+        private DataGridViewTextBoxColumn Diagnostic;
+        private DataGridViewTextBoxColumn DossierMedicalId;
+        private DataGridViewTextBoxColumn SessionId;
+        private DataGridViewTextBoxColumn IDE;
+        private DataGridViewTextBoxColumn Medicament;
+        private DataGridViewTextBoxColumn Dosage;
+        private DataGridViewTextBoxColumn Instruction;
+        private DataGridViewTextBoxColumn Duree;
+        private DataGridViewTextBoxColumn ConsultationId;
+        private DataGridViewTextBoxColumn etat;
     }
 }

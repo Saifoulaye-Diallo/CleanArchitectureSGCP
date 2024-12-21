@@ -22,11 +22,19 @@ namespace CleanArchitectureSGCP.Core.Services
             return _consultationRepository.AddAsync(consultation);
         }
 
+        public async Task<Consultation> GetByIdAsync(int id)
+        {
+           return await _consultationRepository.GetByIdAsync(id);
+        }
+
         public async Task<List<Consultation>> GetConsultationsByPatientIdAsync(int patientId)
         {
            return await _consultationRepository.GetConsultationsByPatientIdAsync(patientId);
         }
 
-       
+        public async Task UpdateConsultationAsync(Consultation consultation)
+        {
+            await _consultationRepository.UpdateAsync(consultation);
+        }
     }
 }

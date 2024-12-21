@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Globalization;
+using System.Threading;
 
 namespace CleanArchitectureSGCP.WinApp
 {
@@ -66,6 +68,9 @@ namespace CleanArchitectureSGCP.WinApp
                     Console.WriteLine("Error");
                 }
             }
+            // Définir la culture en français
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("fr-FR");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("fr-FR");
         }
     }
 }

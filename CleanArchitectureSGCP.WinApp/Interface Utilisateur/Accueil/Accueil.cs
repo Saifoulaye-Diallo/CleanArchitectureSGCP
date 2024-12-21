@@ -19,12 +19,14 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
         private readonly IGestionMedecinService _gestionMedecinService;
         private readonly IGestionDossierMedicalService _gestionDossierMedicalService;
         private readonly IGestionConsultationsService _gestionConsultationsService;
-        public Accueil(IGestionPatientService gestionPatientService, IGestionMedecinService gestionMedecinService, IGestionDossierMedicalService gestionDossierMedicalService, IGestionConsultationsService gestionConsultationsService)
+        private readonly IGestionPrescriptionService _gestionPrescriptionService;
+        public Accueil(IGestionPatientService gestionPatientService, IGestionMedecinService gestionMedecinService, IGestionDossierMedicalService gestionDossierMedicalService, IGestionConsultationsService gestionConsultationsService, IGestionPrescriptionService gestionPrescriptionService)
         {
             _gestionPatientService = gestionPatientService ?? throw new ArgumentNullException(nameof(gestionPatientService));
             _gestionMedecinService = gestionMedecinService ?? throw new ArgumentNullException(nameof(gestionMedecinService));
             _gestionDossierMedicalService = gestionDossierMedicalService;
             _gestionConsultationsService = gestionConsultationsService;
+            _gestionPrescriptionService = gestionPrescriptionService;
             InitializeComponent();
 
             // Applique un thème clair Metro
@@ -43,7 +45,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
 
 
             this.FormClosed += MainForm_FormClosed;
-
+           
         }
 
         private void InitializePanelContainer()
@@ -128,7 +130,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
 
         private void gestionDesPrescritptionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var gestionPrescription = new Form_gestion_Prescription(_gestionPatientService,_gestionMedecinService,_gestionConsultationsService);
+            var gestionPrescription = new Form_gestion_Prescription(_gestionPatientService,_gestionMedecinService,_gestionConsultationsService,_gestionPrescriptionService);
             LoadUserControl(gestionPrescription);
         }
     }

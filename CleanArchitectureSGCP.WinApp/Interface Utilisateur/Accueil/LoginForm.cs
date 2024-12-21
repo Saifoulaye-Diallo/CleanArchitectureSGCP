@@ -20,14 +20,16 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
         private readonly IGestionPatientService _gestionPatientService;
         private readonly IGestionDossierMedicalService _gestionDossierMedicalService;
         private readonly IGestionConsultationsService _gestionConsultationsService;
-
-        public LoginForm(IGestionMedecinService gestionMedecinService, IGestionPatientService gestionPatientService, IGestionDossierMedicalService gestionDossierMedicalService, IGestionConsultationsService gestionConsultationsService)
+        private readonly IGestionPrescriptionService _gestionPrescriptionService;
+        public LoginForm(IGestionMedecinService gestionMedecinService, IGestionPatientService gestionPatientService, IGestionDossierMedicalService gestionDossierMedicalService, IGestionConsultationsService gestionConsultationsService, IGestionPrescriptionService gestionPrescriptionService)
         {
 
             _gestionMedecinService = gestionMedecinService;
             _gestionPatientService = gestionPatientService;
             _gestionDossierMedicalService = gestionDossierMedicalService;
             _gestionConsultationsService = gestionConsultationsService;
+            _gestionPrescriptionService = gestionPrescriptionService;
+
             InitializeComponent();
         }
         private async void Btn_Connexion_Click(object sender, EventArgs e)
@@ -47,7 +49,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
                     if (Session.Instance != null)
                     {
                         // Fermer LoginForm et ouvrir MainForm
-                        var accueil = new Accueil(_gestionPatientService, _gestionMedecinService, _gestionDossierMedicalService, _gestionConsultationsService);
+                        var accueil = new Accueil(_gestionPatientService, _gestionMedecinService, _gestionDossierMedicalService, _gestionConsultationsService, _gestionPrescriptionService);
                         accueil.Show();
 
                         this.Hide(); // Cache LoginForm

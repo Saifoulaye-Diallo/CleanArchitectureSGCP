@@ -13,10 +13,29 @@ class Program
     {
 
         Console.WriteLine("Bienvenue ");
-        GetConsultation();
+        GetPrescription();
         Console.WriteLine("Appuyez sur une touche pour terminer...");
         Console.ReadKey();
         //AddPatientAsync();
+    }
+    private static async void GetPrescription()
+    {
+        using (var context = new SGCPContext())
+        {
+            IPrescription ipresc = new PrescriptionRepository(context);
+            IGestionPrescriptionService _service = new GestionPrescriptionService(ipresc);
+
+
+            var prescription = await _service.GetPrescriptionsByConsultationIdAsync(4);
+            if (prescription.Any())
+            {
+                Console.WriteLine("Consultations trouvées :");
+                foreach (var consultation in prescription)
+                {
+                    Console.WriteLine($"- {consultation.Medicament}: {consultation.etat}");
+                }
+            }
+        }
     }
     private static async void GetDossier()
     {
@@ -103,8 +122,8 @@ class Program
 
 
     }
-
-    public static Medecin conexion(string a,string b)
+    /*
+    public async static Medecin Conexion(string a,string b)
     {
         using (SGCPContext context = new SGCPContext())
         {
@@ -112,10 +131,10 @@ class Program
 
             IGestionMedecinService medecinService = new GestionMedecinService(_medecin);
 
-            return medecinService.Connexion(a, b);
+            return await medecinService.ConnexionAdync(a, b);
         }
     }
-
+    */
     public static async void AddPatientAsync()
     {
         try

@@ -11,5 +11,8 @@ namespace CleanArchitectureSGCP.Core.Interfaces
     {
         Task AddConsultationAsync(Consultation consultation);
         Task<List<Consultation>> GetConsultationsByPatientIdAsync(int patientId);
+
+        Task UpdateConsultationAsync(Consultation consultation);
+        Task<Consultation> GetByIdAsync(int id);
     }
 }
