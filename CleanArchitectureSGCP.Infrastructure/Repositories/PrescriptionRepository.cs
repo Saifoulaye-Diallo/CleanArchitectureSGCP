@@ -25,5 +25,21 @@ namespace CleanArchitectureSGCP.Infrastructure.Repositories
             return consultation?.Prescriptions ?? new List<Prescription>();
         }
 
+        public async Task<List<Prescription>> GetPrescriptionsPasseesByPatientIdAsync(int patientId)
+        {
+            
+           // Effectuer la requête avec jointures
+            var prescriptions = await _Sgcpcontext.DossiersMedicals
+                .Where(dm => dm.PatientId == patientId) // Filtre par ID du patient
+                .SelectMany(dm => dm.Consultations)    // Accède aux consultations
+                .SelectMany(c => c.Prescriptions)      // Accède aux prescriptions
+                .Where(p => p.etat == 0)               // Filtre sur l'état = 0 (passée)
+                .ToListAsync();                        // Exécute la requête et retourne la liste
+
+            // Retourner la liste des prescriptions
+            return prescriptions;
+        }
+
+
     }
 }

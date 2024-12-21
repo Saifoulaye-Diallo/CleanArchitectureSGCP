@@ -2,6 +2,7 @@
 using CleanArchitectureSGCP.Core.Interfaces;
 using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs;
 using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Fom_Consultation;
+using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Form_DossierMedical;
 using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Patient;
 using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription;
 using MetroFramework;
@@ -28,7 +29,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
             _gestionConsultationsService = gestionConsultationsService;
             _gestionPrescriptionService = gestionPrescriptionService;
             InitializeComponent();
-
+           
             // Applique un thème clair Metro
             this.Theme = MetroThemeStyle.Light;
             this.Style = MetroColorStyle.Blue;
@@ -45,7 +46,8 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
 
 
             this.FormClosed += MainForm_FormClosed;
-           
+          
+
         }
 
         private void InitializePanelContainer()
@@ -113,6 +115,8 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
 
         private void gestionDesPatientsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            gestionDesPatientsToolStripMenuItem.BackColor = Color.LightBlue;
+
             var listPatients = new ListPatients(_gestionMedecinService, _gestionPatientService);
             LoadUserControl(listPatients);
         }
@@ -124,14 +128,46 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
 
         private void gestionDesConsultationsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+           
             var listPatientConsultation = new List_Patient_Consultation(_gestionMedecinService, _gestionPatientService, _gestionDossierMedicalService, _gestionConsultationsService);
             LoadUserControl(listPatientConsultation);
+            
         }
 
         private void gestionDesPrescritptionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var gestionPrescription = new Form_gestion_Prescription(_gestionPatientService,_gestionMedecinService,_gestionConsultationsService,_gestionPrescriptionService);
+            var gestionPrescription = new Form_gestion_Prescription(_gestionPatientService, _gestionMedecinService, _gestionConsultationsService, _gestionPrescriptionService);
             LoadUserControl(gestionPrescription);
+         
         }
+
+        private void gestionDossierMedicalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            var gestionDossierMedical = new ListPatientDossierMedial(_gestionMedecinService, _gestionPatientService,_gestionPrescriptionService);
+            LoadUserControl(gestionDossierMedical);
+        }
+        private void ChangeMenuColor(ToolStripMenuItem selectedMenu)
+        {
+            // Réinitialiser la couleur de tous les menus
+            foreach (ToolStripMenuItem item in MenuPrincipatl.Items)
+            {
+                item.BackColor = Color.White; // Couleur par défaut
+                item.ForeColor = Color.Black; // Texte noir par défaut
+            }
+
+            // Appliquer la couleur au menu sélectionné
+            selectedMenu.BackColor = Color.LightBlue; // Couleur de fond
+            selectedMenu.ForeColor = Color.DarkBlue;  // Texte en bleu foncé
+        }
+        private void Menu_Click(object sender, EventArgs e)
+        {
+            if (sender is ToolStripMenuItem selectedMenu)
+            {
+                // Appeler la méthode générale pour changer la couleur
+                ChangeMenuColor(selectedMenu);
+            }
+        }
+
     }
 }

@@ -11,5 +11,6 @@ namespace CleanArchitectureSGCP.Core.Interfaces
     public interface IPrescription : IAsyncRepository<Prescription>, IRepository<Prescription>
     {
         Task<List<Prescription>> GetPrescriptionsByConsultationIdAsync(int consultationId);
+        Task<List<Prescription>> GetPrescriptionsPasseesByPatientIdAsync(int patientId);
     }
 }

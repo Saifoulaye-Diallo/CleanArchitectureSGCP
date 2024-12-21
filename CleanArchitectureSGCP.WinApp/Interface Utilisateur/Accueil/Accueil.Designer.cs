@@ -36,6 +36,7 @@
             PannelPrincipal = new Panel();
             MenuPrincipatl.SuspendLayout();
             SuspendLayout();
+     
             // 
             // MenuPrincipatl
             // 
@@ -59,6 +60,7 @@
             gestionDossierMedicalToolStripMenuItem.Name = "gestionDossierMedicalToolStripMenuItem";
             gestionDossierMedicalToolStripMenuItem.Size = new Size(234, 25);
             gestionDossierMedicalToolStripMenuItem.Text = "Gestion des dossiers medicaux";
+            gestionDossierMedicalToolStripMenuItem.Click += gestionDossierMedicalToolStripMenuItem_Click;
             // 
             // gestionDesConsultationsToolStripMenuItem
             // 
@@ -97,6 +99,11 @@
             MenuPrincipatl.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
+            gestionDesPatientsToolStripMenuItem.PerformClick();
+            gestionDesPatientsToolStripMenuItem.Click += Menu_Click;
+            gestionDossierMedicalToolStripMenuItem.Click += Menu_Click;
+            gestionDesConsultationsToolStripMenuItem.Click += Menu_Click;
+            gestionDesPrescritptionToolStripMenuItem.Click += Menu_Click;
         }
 
         #endregion

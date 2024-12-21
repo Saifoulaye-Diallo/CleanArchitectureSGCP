@@ -17,5 +17,7 @@ namespace CleanArchitectureSGCP.Core.Interfaces
         Task<Prescription> GetPrescriptionByIdAsync(int id);
 
         Task<List<Prescription>> GetPrescriptionsByConsultationIdAsync(int consultationId);
+
+        Task<List<Prescription>> GetPrescriptionsPasseesByPatientIdAsync(int patientId);
     }
 }

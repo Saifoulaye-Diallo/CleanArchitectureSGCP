@@ -83,8 +83,8 @@
             Btn_Connexion.Size = new Size(129, 32);
             Btn_Connexion.TabIndex = 3;
             Btn_Connexion.Text = "Se Connecter";
-            Btn_Connexion.TextImageRelation = TextImageRelation.ImageBeforeText;
-            toolTip.SetToolTip(Btn_Connexion, "Entrer vos informations et cliquer ici pour vous connecter .");
+        
+            toolTip.SetToolTip(Btn_Connexion, "Entrer vos informations et cliquer ici pour vous connecter.");
             Btn_Connexion.UseVisualStyleBackColor = false;
             Btn_Connexion.Click += Btn_Connexion_Click;
             // 
@@ -100,7 +100,7 @@
             btn_fermer.BackColor = Color.FromArgb(255, 82, 82);
             btn_fermer.FlatAppearance.BorderSize = 0;
             btn_fermer.FlatStyle = FlatStyle.Flat;
-            btn_fermer.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            btn_fermer.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             btn_fermer.ForeColor = Color.White;
             btn_fermer.Image = (Image)resources.GetObject("btn_fermer.Image");
             btn_fermer.ImageAlign = ContentAlignment.MiddleLeft;

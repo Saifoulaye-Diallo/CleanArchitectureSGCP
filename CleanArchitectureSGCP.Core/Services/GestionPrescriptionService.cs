@@ -32,9 +32,16 @@ namespace CleanArchitectureSGCP.Core.Services
             return _prescriptionRepository.GetPrescriptionsByConsultationIdAsync(consultationId);
         }
 
+        public async Task<List<Prescription>> GetPrescriptionsPasseesByPatientIdAsync(int patientId)
+        {
+           return await _prescriptionRepository.GetPrescriptionsPasseesByPatientIdAsync(patientId);
+        }
+
         public async Task UpdatePrescriptionAsync(Prescription prescription)
         {
            await _prescriptionRepository.UpdateAsync(prescription);
         }
+
+
     }
 }
