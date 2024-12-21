@@ -37,6 +37,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             lbl_GestionPatient = new Label();
             pannell_bas_page = new Panel();
             panelBoutons = new Panel();
+            btn_fermer = new Button();
             btn_ajouter = new Button();
             btn_Modifier = new Button();
             btn_consulter = new Button();
@@ -52,7 +53,6 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             ID = new DataGridViewTextBoxColumn();
             patientBindingSource = new BindingSource(components);
             toolTip = new ToolTip(components);
-            btn_fermer = new Button();
             panel_Titre.SuspendLayout();
             pannell_bas_page.SuspendLayout();
             panelBoutons.SuspendLayout();
@@ -105,6 +105,25 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             panelBoutons.Name = "panelBoutons";
             panelBoutons.Size = new Size(622, 43);
             panelBoutons.TabIndex = 3;
+            // 
+            // btn_fermer
+            // 
+            btn_fermer.BackColor = Color.FromArgb(255, 82, 82);
+            btn_fermer.FlatAppearance.BorderSize = 0;
+            btn_fermer.FlatStyle = FlatStyle.Flat;
+            btn_fermer.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            btn_fermer.ForeColor = Color.White;
+            btn_fermer.Image = (Image)resources.GetObject("btn_fermer.Image");
+            btn_fermer.ImageAlign = ContentAlignment.MiddleLeft;
+            btn_fermer.Location = new Point(512, 6);
+            btn_fermer.Name = "btn_fermer";
+            btn_fermer.Size = new Size(107, 30);
+            btn_fermer.TabIndex = 3;
+            btn_fermer.Text = "Fermer";
+            btn_fermer.TextAlign = ContentAlignment.MiddleRight;
+            toolTip.SetToolTip(btn_fermer, "Cliquez pour fermer l'application");
+            btn_fermer.UseVisualStyleBackColor = false;
+            btn_fermer.Click += btn_fermer_Click;
             // 
             // btn_ajouter
             // 
@@ -251,25 +270,6 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             toolTip.InitialDelay = 200;
             toolTip.ReshowDelay = 100;
             toolTip.ShowAlways = true;
-            // 
-            // btn_fermer
-            // 
-            btn_fermer.BackColor = Color.FromArgb(255, 82, 82);
-            btn_fermer.FlatAppearance.BorderSize = 0;
-            btn_fermer.FlatStyle = FlatStyle.Flat;
-            btn_fermer.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            btn_fermer.ForeColor = Color.White;
-            btn_fermer.Image = (Image)resources.GetObject("btn_fermer.Image");
-            btn_fermer.ImageAlign = ContentAlignment.MiddleLeft;
-            btn_fermer.Location = new Point(512, 6);
-            btn_fermer.Name = "btn_fermer";
-            btn_fermer.Size = new Size(107, 30);
-            btn_fermer.TabIndex = 3;
-            btn_fermer.Text = "Fermer";
-            btn_fermer.TextAlign = ContentAlignment.MiddleRight;
-            toolTip.SetToolTip(btn_fermer, "Cliquez ici pour enregistrer l'ajout de la nouvelle consultation.");
-            btn_fermer.UseVisualStyleBackColor = false;
-            btn_fermer.Click += btn_fermer_Click;
             // 
             // ListPatients
             // 

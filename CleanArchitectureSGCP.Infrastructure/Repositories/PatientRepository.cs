@@ -17,9 +17,10 @@ namespace CleanArchitectureSGCP.Infrastructure.Repositories
 
         public async Task<List<Patient>> GetPatientsByMedecinIdAsync(int medecinId)
         {
-            return await _Sgcpcontext.Patients
-                .Where(p => EF.Property<int>(p, "MedecinId") == medecinId) // Filtrer par la clé étrangère
-                .ToListAsync();
+           return await _Sgcpcontext.Medecins
+              .Where(m => m.Id == medecinId) // Filtrer par ID du médecin
+              .SelectMany(m => m.Patients)  // Sélectionner tous les patients associés
+              .ToListAsync();
         }
     }
 }

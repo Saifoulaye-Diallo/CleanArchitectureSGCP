@@ -16,11 +16,6 @@ namespace CleanArchitectureSGCP.Infrastructure.Repositories
         {
         }
 
-        public Task AddAsync(Consultation consultation)
-        {
-            throw new NotImplementedException();
-        }
-
         public Consultation GetByIdWithPrescriptions(int id)
         {
             return _Sgcpcontext.Consultations.Include(t => t.Prescriptions).FirstOrDefault(t => t.Id == id);

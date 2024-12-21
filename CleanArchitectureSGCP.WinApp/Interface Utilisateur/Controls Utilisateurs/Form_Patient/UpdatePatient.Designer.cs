@@ -31,7 +31,6 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UpdatePatient));
-
             PannelPrincipal = new Panel();
             splitContainer_ajout = new SplitContainer();
             labelCourriel = new Label();
@@ -178,11 +177,11 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             btn_annuler.FlatStyle = FlatStyle.Flat;
             btn_annuler.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             btn_annuler.ForeColor = Color.White;
+            btn_annuler.Image = (Image)resources.GetObject("btn_annuler.Image");
             btn_annuler.ImageAlign = ContentAlignment.MiddleLeft;
             btn_annuler.Location = new Point(161, 259);
             btn_annuler.Name = "btn_annuler";
             btn_annuler.Size = new Size(120, 35);
-            btn_annuler.Image = (Image)resources.GetObject("btn_annuler.Image");
             btn_annuler.TabIndex = 0;
             btn_annuler.Text = "Annuler";
             btn_annuler.TextAlign = ContentAlignment.MiddleRight;
@@ -196,12 +195,12 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             btn_save.FlatStyle = FlatStyle.Flat;
             btn_save.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             btn_save.ForeColor = Color.White;
+            btn_save.Image = (Image)resources.GetObject("btn_save.Image");
             btn_save.ImageAlign = ContentAlignment.MiddleLeft;
             btn_save.Location = new Point(16, 259);
             btn_save.Name = "btn_save";
             btn_save.Size = new Size(139, 35);
             btn_save.TabIndex = 1;
-            btn_save.Image = (Image)resources.GetObject("btn_save.Image");
             btn_save.Text = "Enregistrer";
             btn_save.TextAlign = ContentAlignment.MiddleRight;
             btn_save.UseVisualStyleBackColor = false;

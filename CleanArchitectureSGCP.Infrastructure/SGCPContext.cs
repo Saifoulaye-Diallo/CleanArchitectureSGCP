@@ -24,7 +24,7 @@ namespace CleanArchitectureSGCP.Infrastructure
         public SGCPContext() : base(new
                DbContextOptionsBuilder<SGCPContext>()
 
-               .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=SGCPDB;Trusted_Connection=True;")
+               .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=CleanArchitectureSGCPDB;Trusted_Connection=True;")
                .Options)
         { }
 

@@ -1,79 +1,81 @@
-﻿using CleanArchitectureSGCP.Core.Entities;
-using CleanArchitectureSGCP.Core.Interfaces;
-using CleanArchitectureSGCP.Core.Services;
-using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Form_Patient;
-using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.PatientForm;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿// Importation des bibliothèques nécessaires
+using CleanArchitectureSGCP.Core.Entities; // Modèles d'entités
+using CleanArchitectureSGCP.Core.Interfaces; // Interfaces pour les services
+
 
 namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Form_DossierMedical
 {
+    // Classe pour afficher la liste des patients et leurs dossiers médicaux
     public partial class ListPatientDossierMedial : UserControl
     {
-        private readonly IGestionMedecinService _gestionMedecinService;
-        private readonly IGestionPatientService _gestionPatientService;
-        private readonly IGestionPrescriptionService _gestionPrescriptionService;
+        // Déclaration des services nécessaires pour la gestion des données
+        private readonly IGestionPatientService _gestionPatientService; // Gestion des patients
+        private readonly IGestionPrescriptionService _gestionPrescriptionService; // Gestion des prescriptions
 
+        // Instance du patient sélectionné
         CleanArchitectureSGCP.Core.Entities.Patient _patient;
-        public ListPatientDossierMedial(IGestionMedecinService gestionMedecinService, IGestionPatientService gestionPatientService, IGestionPrescriptionService gestionPrescriptionService)
+
+        // Constructeur avec injection des dépendances
+        public ListPatientDossierMedial(
+            IGestionMedecinService gestionMedecinService,
+            IGestionPatientService gestionPatientService,
+            IGestionPrescriptionService gestionPrescriptionService)
         {
-            // Initialisation des dépendances
-            _gestionMedecinService = gestionMedecinService;
+            // Initialisation des services
             _gestionPatientService = gestionPatientService ?? throw new ArgumentNullException(nameof(gestionPatientService));
             _gestionPrescriptionService = gestionPrescriptionService;
 
-            // Initialiser les composants
+            // Initialisation des composants graphiques
             InitializeComponent();
 
             // Configuration du DataGridView
-            dtgPatientList.MultiSelect = false;
-            dtgPatientList.AutoGenerateColumns = false;
-            StyleDataGridView(dtgPatientList);
+            dtgPatientList.MultiSelect = false; // Empêche la sélection multiple
+            dtgPatientList.AutoGenerateColumns = false; // Désactive la génération automatique des colonnes
+            StyleDataGridView(dtgPatientList); // Applique un style personnalisé au DataGridView
 
-            // Charger les données
+            // Chargement des patients
             LoadPatients();
 
-            // Abonner les événements
+            // Abonnement aux événements
             dtgPatientList.SelectionChanged += DtgPatientList_SelectionChanged;
         }
 
+        // Méthode pour charger la liste des patients dans le DataGridView
         private async void LoadPatients()
         {
-            // Désélectionner toutes les cellules après le chargement
+            // Récupère l'ID du médecin connecté
             var medecinId = Session.Instance.Medecin.Id;
-            // Charger la liste des patients
+
+            // Charge la liste des patients associés au médecin
             var patients = await _gestionPatientService.GetPatientsByMedecinIdAsync(medecinId);
-            dtgPatientList.DataSource = null; // Réinitialisez
-            dtgPatientList.DataSource = patients; // Rechargez les données
-            dtgPatientList.Refresh(); // Rafraîchissez l'affichage
+
+            // Mise à jour des données dans le DataGridView
+            dtgPatientList.DataSource = null; // Réinitialisation
+            dtgPatientList.DataSource = patients; // Rechargement des données
+            dtgPatientList.Refresh(); // Rafraîchissement de l'affichage
+
+            // Désélectionne toutes les lignes après chargement
             dtgPatientList.ClearSelection();
             dtgPatientList.AutoGenerateColumns = false;
             dtgPatientList.ClearSelection();
         }
 
-
+        // Vérifie la sélection actuelle dans le DataGridView
         private void VerifierSelection()
         {
             // Si aucune ligne n'est sélectionnée
             if (dtgPatientList.SelectedRows.Count == 0)
             {
+                // Désactive le bouton de prescription
                 btn_prescriptions.Enabled = false;
-
-                _patient = null; // Réinitialiser l'objet patient
+                _patient = null; // Réinitialise l'objet patient
                 return;
             }
 
-            // Récupérer la première ligne sélectionnée
+            // Récupère la première ligne sélectionnée
             DataGridViewRow row = dtgPatientList.SelectedRows[0];
 
-            // Créer et remplir l'objet Patient
+            // Crée un nouvel objet Patient à partir des données de la ligne sélectionnée
             CleanArchitectureSGCP.Core.Entities.Patient _patientSelect = new CleanArchitectureSGCP.Core.Entities.Patient
             {
                 Id = (int)row.Cells["ID"].Value,
@@ -85,28 +87,30 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
                 DateDeNaissance = row.Cells["DateDeNaissance"].Value is DateTime date ? date : DateTime.MinValue
             };
 
+            // Mise à jour de l'objet patient
             _patient = _patientSelect;
 
-            // Activer les boutons
+            // Active le bouton de prescription
             btn_prescriptions.Enabled = true;
-
         }
 
+        // Événement appelé lors du changement de sélection dans le DataGridView
         private void DtgPatientList_SelectionChanged(object sender, EventArgs e)
         {
-            VerifierSelection();
+            VerifierSelection(); // Vérifie la sélection actuelle
         }
 
-
-
+        // Gestion du clic sur le bouton "Fermer"
         private void btn_fermer_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            Application.Exit(); // Ferme complètement l'application
         }
 
+        // Gestion du clic sur le bouton "Prescriptions"
         private void btn_prescriptions_Click(object sender, EventArgs e)
         {
-            var traitementpasse = new ListPrescriptionPassees(_gestionPrescriptionService,_patient);
+            // Ouvre la fenêtre des prescriptions passées pour le patient sélectionné
+            var traitementpasse = new ListPrescriptionPassees(_gestionPrescriptionService, _patient);
             traitementpasse.ShowDialog();
         }
     }

@@ -1,4 +1,7 @@
-﻿namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Form_DossierMedical
+﻿using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
+namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Form_DossierMedical
 {
     partial class ListPrescriptionPassees
     {
@@ -31,7 +34,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ListPrescriptionPassees));
             panel1 = new Panel();
             panel2 = new Panel();
-            btn_annuler = new Button();
             panel3 = new Panel();
             dtgListePrescription = new DataGridView();
             IDE = new DataGridViewTextBoxColumn();
@@ -41,12 +43,12 @@
             Duree = new DataGridViewTextBoxColumn();
             ConsultationId = new DataGridViewTextBoxColumn();
             etat = new DataGridViewTextBoxColumn();
+            btn_fermer = new System.Windows.Forms.Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dtgListePrescription).BeginInit();
             SuspendLayout();
-            dtgListePrescription.CellFormatting += ConvertEtat;
             // 
             // panel1
             // 
@@ -59,30 +61,12 @@
             // 
             // panel2
             // 
-            panel2.Controls.Add(btn_annuler);
+            panel2.Controls.Add(btn_fermer);
             panel2.Dock = DockStyle.Right;
             panel2.Location = new Point(728, 0);
             panel2.Name = "panel2";
             panel2.Size = new Size(138, 40);
             panel2.TabIndex = 0;
-            // 
-            // btn_annuler
-            // 
-            btn_annuler.BackColor = Color.FromArgb(255, 82, 82);
-            btn_annuler.FlatAppearance.BorderSize = 0;
-            btn_annuler.FlatStyle = FlatStyle.Flat;
-            btn_annuler.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            btn_annuler.ForeColor = Color.White;
-            btn_annuler.Image = (Image)resources.GetObject("btn_annuler.Image");
-            btn_annuler.ImageAlign = ContentAlignment.MiddleLeft;
-            btn_annuler.Location = new Point(15, 3);
-            btn_annuler.Name = "btn_annuler";
-            btn_annuler.Size = new Size(120, 35);
-            btn_annuler.TabIndex = 1;
-            btn_annuler.Text = "Fermer";
-            btn_annuler.TextAlign = ContentAlignment.MiddleRight;
-            btn_annuler.UseVisualStyleBackColor = false;
-            btn_annuler.Click += btn_annuler_Click;
             // 
             // panel3
             // 
@@ -108,6 +92,7 @@
             dtgListePrescription.ReadOnly = true;
             dtgListePrescription.Size = new Size(866, 411);
             dtgListePrescription.TabIndex = 8;
+            dtgListePrescription.CellFormatting += ConvertEtat;
             // 
             // IDE
             // 
@@ -159,6 +144,24 @@
             etat.HeaderText = "Etat";
             etat.Name = "etat";
             etat.ReadOnly = true;
+            // 
+            // btn_fermer
+            // 
+            btn_fermer.BackColor = Color.FromArgb(255, 82, 82);
+            btn_fermer.FlatAppearance.BorderSize = 0;
+            btn_fermer.FlatStyle = FlatStyle.Flat;
+            btn_fermer.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            btn_fermer.ForeColor = Color.White;
+            btn_fermer.Image = (Image)resources.GetObject("btn_fermer.Image");
+            btn_fermer.ImageAlign = ContentAlignment.MiddleLeft;
+            btn_fermer.Location = new Point(16, 5);
+            btn_fermer.Name = "btn_fermer";
+            btn_fermer.Size = new Size(107, 30);
+            btn_fermer.TabIndex = 4;
+            btn_fermer.Text = "Fermer";
+            btn_fermer.TextAlign = ContentAlignment.MiddleRight;
+            btn_fermer.UseVisualStyleBackColor = false;
+            btn_fermer.Click += btn_fermer_Click;
             // 
             // ListPrescriptionPassees
             // 
@@ -226,7 +229,7 @@
         #endregion
         private Panel panel1;
         private Panel panel2;
-        private Button btn_annuler;
+     
         private Panel panel3;
         private DataGridView dtgListePrescription;
         private DataGridViewTextBoxColumn IDE;
@@ -236,5 +239,6 @@
         private DataGridViewTextBoxColumn Duree;
         private DataGridViewTextBoxColumn ConsultationId;
         private DataGridViewTextBoxColumn etat;
+        private System.Windows.Forms.Button btn_fermer;
     }
 }

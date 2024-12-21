@@ -37,6 +37,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             toolTip = new ToolTip(components);
             btn_ajouter_consultation = new Button();
             btn_consulter_historique = new Button();
+            btn_fermer = new Button();
             pannell_bas_page = new Panel();
             panelBoutons = new Panel();
             panel_List = new Panel();
@@ -50,7 +51,6 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             courriel = new DataGridViewTextBoxColumn();
             ID = new DataGridViewTextBoxColumn();
             patientBindingSource = new BindingSource(components);
-            btn_fermer = new Button();
             panel_Titre.SuspendLayout();
             pannell_bas_page.SuspendLayout();
             panelBoutons.SuspendLayout();
@@ -103,7 +103,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             btn_ajouter_consultation.TabIndex = 0;
             btn_ajouter_consultation.Text = "Ajouter une consultation";
             btn_ajouter_consultation.TextAlign = ContentAlignment.MiddleRight;
-            toolTip.SetToolTip(btn_ajouter_consultation, "Cliquez ici pour ajouter une nouvelle consultation a la fiche patient selectionnée.");
+            toolTip.SetToolTip(btn_ajouter_consultation, "Cliquez pour ajouter une nouvelle consultation a la fiche patient selectionnée.");
             btn_ajouter_consultation.UseVisualStyleBackColor = false;
             btn_ajouter_consultation.Click += btn_ajouter_consultation_Click;
             // 
@@ -122,9 +122,28 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             btn_consulter_historique.TabIndex = 2;
             btn_consulter_historique.Text = "Consulter historique";
             btn_consulter_historique.TextAlign = ContentAlignment.MiddleRight;
-            toolTip.SetToolTip(btn_consulter_historique, "Cliquez ici pour consulter l'historique de consultation de la fiche patient selectionnée.");
+            toolTip.SetToolTip(btn_consulter_historique, "Cliquez pour consulter l'historique de consultation de la fiche patient selectionnée.");
             btn_consulter_historique.UseVisualStyleBackColor = false;
             btn_consulter_historique.Click += btn_consulter_historique_Click;
+            // 
+            // btn_fermer
+            // 
+            btn_fermer.BackColor = Color.FromArgb(255, 82, 82);
+            btn_fermer.FlatAppearance.BorderSize = 0;
+            btn_fermer.FlatStyle = FlatStyle.Flat;
+            btn_fermer.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            btn_fermer.ForeColor = Color.White;
+            btn_fermer.Image = (Image)resources.GetObject("btn_fermer.Image");
+            btn_fermer.ImageAlign = ContentAlignment.MiddleLeft;
+            btn_fermer.Location = new Point(537, 6);
+            btn_fermer.Name = "btn_fermer";
+            btn_fermer.Size = new Size(107, 35);
+            btn_fermer.TabIndex = 3;
+            btn_fermer.Text = "Fermer";
+            btn_fermer.TextAlign = ContentAlignment.MiddleRight;
+            toolTip.SetToolTip(btn_fermer, "Cliquez pour fermer l'application");
+            btn_fermer.UseVisualStyleBackColor = false;
+            btn_fermer.Click += btn_fermer_Click;
             // 
             // pannell_bas_page
             // 
@@ -229,25 +248,6 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             // patientBindingSource
             // 
             patientBindingSource.DataSource = typeof(Core.Entities.Patient);
-            // 
-            // btn_fermer
-            // 
-            btn_fermer.BackColor = Color.FromArgb(255, 82, 82);
-            btn_fermer.FlatAppearance.BorderSize = 0;
-            btn_fermer.FlatStyle = FlatStyle.Flat;
-            btn_fermer.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            btn_fermer.ForeColor = Color.White;
-            btn_fermer.Image = (Image)resources.GetObject("btn_fermer.Image");
-            btn_fermer.ImageAlign = ContentAlignment.MiddleLeft;
-            btn_fermer.Location = new Point(537, 6);
-            btn_fermer.Name = "btn_fermer";
-            btn_fermer.Size = new Size(107, 35);
-            btn_fermer.TabIndex = 3;
-            btn_fermer.Text = "Fermer";
-            btn_fermer.TextAlign = ContentAlignment.MiddleRight;
-            toolTip.SetToolTip(btn_fermer, "Cliquez ici pour enregistrer l'ajout de la nouvelle consultation.");
-            btn_fermer.UseVisualStyleBackColor = false;
-            btn_fermer.Click += btn_fermer_Click;
             // 
             // List_Patient_Consultation
             // 

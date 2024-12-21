@@ -25,16 +25,12 @@ namespace CleanArchitectureSGCP.WinApp
         {
             var builder = new HostBuilder().ConfigureServices((hostContext, services) =>
             {
-                services.AddDbContext<SGCPContext>(options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=SGCPDB;Trusted_Connection=True;"));
+                services.AddDbContext<SGCPContext>(options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=CleanArchitectureSGCPDB;Trusted_Connection=True;"));
 
 
                 services.AddSingleton<Accueil>();
 
                 services.AddTransient<LoginForm>();
-                //services.AddTransient<ListPatients>();
-                //services.AddTransient<AddPatient>();
-                //services.AddTransient<UpdatePatient>();
-
 
                 services.AddLogging(configure => configure.AddConsole());
                 //Medecin

@@ -109,7 +109,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             btn_prescriptions.TabIndex = 4;
             btn_prescriptions.Text = "Presciptions passées";
             btn_prescriptions.TextAlign = ContentAlignment.MiddleRight;
-            toolTip.SetToolTip(btn_prescriptions, "Cliquez ici pour consulter la fiche du patient selectionnée.");
+            toolTip.SetToolTip(btn_prescriptions, "Cliquez pour consulter la liste des prescriptions passees ");
             btn_prescriptions.UseVisualStyleBackColor = false;
             btn_prescriptions.Click += btn_prescriptions_Click;
             // 
@@ -120,6 +120,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             btn_fermer.FlatStyle = FlatStyle.Flat;
             btn_fermer.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             btn_fermer.ForeColor = Color.White;
+            btn_fermer.Image = (Image)resources.GetObject("btn_fermer.Image");
             btn_fermer.ImageAlign = ContentAlignment.MiddleLeft;
             btn_fermer.Location = new Point(265, 6);
             btn_fermer.Name = "btn_fermer";
@@ -127,7 +128,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             btn_fermer.TabIndex = 3;
             btn_fermer.Text = "Fermer";
             btn_fermer.TextAlign = ContentAlignment.MiddleRight;
-            toolTip.SetToolTip(btn_fermer, "Cliquez ici pour enregistrer l'ajout de la nouvelle consultation.");
+            toolTip.SetToolTip(btn_fermer, "Cliquez pour fermer l'application");
             btn_fermer.UseVisualStyleBackColor = false;
             btn_fermer.Click += btn_fermer_Click;
             // 

@@ -13,100 +13,64 @@ class Program
     {
 
         Console.WriteLine("Bienvenue ");
-        GetPrescription();
+        ajoutMedecinAsync();
         Console.WriteLine("Appuyez sur une touche pour terminer...");
         Console.ReadKey();
         //AddPatientAsync();
     }
-    private static async void GetPrescription()
+ 
+    public static async void ajoutMedecinAsync()
     {
+        // Initialisation du contexte de base de données
         using (var context = new SGCPContext())
         {
-            IPrescription ipresc = new PrescriptionRepository(context);
-            IGestionPrescriptionService _service = new GestionPrescriptionService(ipresc);
+            // Création d'un dépôt et d'un service pour gérer les médecins
+            IMedecin medecinRepo = new MedecinRepository(context); // Dépôt
+            IGestionMedecinService medecinService = new GestionMedecinService(medecinRepo); // Service
 
+            // Création d'un objet Medecin avec des informations saisies par l'utilisateur
+            Medecin m = new Medecin();
 
-            var prescription = await _service.GetPrescriptionsByConsultationIdAsync(4);
-            if (prescription.Any())
-            {
-                Console.WriteLine("Consultations trouvées :");
-                foreach (var consultation in prescription)
-                {
-                    Console.WriteLine($"- {consultation.Medicament}: {consultation.etat}");
-                }
-            }
-        }
-    }
-    private static async void GetDossier()
-    {
-        using (var context = new SGCPContext())
-        {
-            IDossierMedical dossierMedical = new DossierMedicalRepository(context);
-            IGestionDossierMedicalService _sevice = new GestionDossierMedicalService(dossierMedical);
+            Console.WriteLine("Veuillez saisir les informations du médecin :");
 
-            DossierMedical dm = await dossierMedical.GetDossierMedicalByPatientIdAsync(48);
+            // Demander à l'utilisateur de saisir les informations
+            Console.Write("Nom : ");
+            m.Nom = Console.ReadLine();
 
-            Console.WriteLine($"{dm.Id}");
-        }
-    }
+            Console.Write("Prénom : ");
+            m.Prenom = Console.ReadLine();
 
-    public async static void GetConsultation()
-    {
-        using (var context = new SGCPContext())
-        {
-            IConsultation iconsultation = new ConsultationRepository(context);
-            IGestionConsultationsService _sevice = new GestionConsultationService(iconsultation);
-            int patientId = 48; // ID du patient
-            var consultations = await _sevice.GetConsultationsByPatientIdAsync(patientId);
+            Console.Write("Nom d'utilisateur : ");
+            m.NomUtilisateur = Console.ReadLine();
 
-            if (consultations.Any())
-            {
-                Console.WriteLine("Consultations trouvées :");
-                foreach (var consultation in consultations)
-                {
-                    Console.WriteLine($"- {consultation.Date.ToShortDateString()}: {consultation.Diagnostic}");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Aucune consultation trouvée pour ce patient.");
-            }
+            Console.Write("Mot de passe : ");
+            m.MotDePasse = Console.ReadLine();
 
-        }
-    }
-    public static async void ajout()
-    {
-        using (var context = new SGCPContext())
-        {
-            IMedecin medecinRepo = new MedecinRepository(context);
-            IGestionMedecinService medecinService = new GestionMedecinService(medecinRepo);
+            Console.Write("Adresse : ");
+            m.Addresse = Console.ReadLine();
 
-            Medecin m = new Medecin
-            {
-                MotDePasse = "15555",
-                NomUtilisateur = "Saifon3155",
-                Nom = "Saifon112",
-                Addresse = "12345 DD",
-                AddresseCourriel = "ss@gmail.com",
-                NumeroTelephone = "44455",
-                NumeroLicence = "114ddd",
-                Prenom = "Saifon"
-            };
+            Console.Write("Adresse courriel : ");
+            m.AddresseCourriel = Console.ReadLine();
 
+            Console.Write("Numéro de téléphone : ");
+            m.NumeroTelephone = Console.ReadLine();
+
+            Console.Write("Numéro de licence : ");
+            m.NumeroLicence = Console.ReadLine();
 
             try
             {
-                //Medecin m2 = new Medecin { };
-                //m2 = medecinRepo.GetById<Medecin>(1);
-                
-                //Console.WriteLine($"Début de l'exécution {m2.Nom}"); // Test si le code atteint ce point
-                Medecin med = await medecinService.AddAsync(m);
+                // Enregistrer le médecin dans la base de données via le service
+                Medecin med = await medecinService.AddAsync(m); // Appel asynchrone pour ajouter le médecin
                 Console.WriteLine("Médecin enregistré avec succès !");
             }
-            catch (Exception ex)
+            catch (Exception ex) // Gestion des erreurs
             {
+                // Afficher les informations sur l'exception
                 Console.WriteLine("Erreur : " + ex.Message);
                 Console.WriteLine("StackTrace : " + ex.StackTrace);
+
+                // Vérifier et afficher l'exception interne s'il y en a une
                 if (ex.InnerException != null)
                 {
                     Console.WriteLine("InnerException : " + ex.InnerException.Message);
@@ -114,137 +78,10 @@ class Program
             }
             finally
             {
-                Console.WriteLine("Bloc finally exécuté."); // Pour voir si on arrive jusque là
-            }
-
-
-        }
-
-
-    }
-    /*
-    public async static Medecin Conexion(string a,string b)
-    {
-        using (SGCPContext context = new SGCPContext())
-        {
-            IMedecin _medecin = new MedecinRepository(context);
-
-            IGestionMedecinService medecinService = new GestionMedecinService(_medecin);
-
-            return await medecinService.ConnexionAdync(a, b);
-        }
-    }
-    */
-    public static async void AddPatientAsync()
-    {
-        try
-        {
-            // Création du contexte
-            using (var context = new SGCPContext())
-            {
-                // Initialisation des services
-                
-                IMedecin _medecin = new MedecinRepository(context);
-                IGestionMedecinService gestionMedecinService = new GestionMedecinService(_medecin);
-
-                // Récupérer le médecin dans un contexte séparé
-                Medecin medecin =await  _medecin.GetByIdAsync(1);
-
-                if (medecin == null)
-                {
-                    Console.WriteLine("Médecin introuvable.");
-                    return;
-                }
-
-                Console.WriteLine($"Bonjour {medecin.Nom}");
-
-                // Création d'un patient
-                Patient p = new Patient
-                {
-                    Nom = "Diallo",
-                    Prenom = "TEST 0",
-                    Addresse = "dfdf",
-                    DateDeNaissance = DateTime.Now,
-                    AddresseCourriel = "dfdf",
-                    NumeroTelephones = "44454555"
-                };
-
-                medecin.AddPatient(p);
-
-                // Mise à jour du médecin
-                
-                 await _medecin.UpdateAsync(medecin);
-
-                Console.WriteLine("Patient ajouté avec succès !");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Erreur : {ex.Message}");
-            if (ex.InnerException != null)
-            {
-                Console.WriteLine($"InnerException : {ex.InnerException.Message}");
-            }
-        }
-    }
-    private static async void testGetAllPatient()
-    {
-        Console.WriteLine("Bienvenue dans l'application !");
-
-        using (var context = new SGCPContext())
-        {
-            // Initialiser le repository
-            IPatient patientRepository = new PatientRepository(context);
-            IGestionPatientService patientService = new GestionPatientService(patientRepository);
-            try
-            {
-                // Récupérer la liste des patients
-                var patients = await patientService.GetPatientsByMedecinIdAsync(1);
-
-                // Vérifier si des patients ont été retournés
-                if (patients != null && patients.Any())
-                {
-                    foreach (var patient in patients)
-                    {
-                        // Afficher les informations du patient
-                        Console.WriteLine($"ID: {patient.Id}, Nom: {patient.Nom}, Prénom: {patient.Prenom}");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Aucun patient trouvé pour ce médecin.");
-                }
-            }
-            catch (Exception ex)
-            {
-                // Gestion des erreurs
-                Console.WriteLine($"Erreur : {ex.Message}");
-                Console.WriteLine($"Détails : {ex.StackTrace}");
+                // Bloc exécuté quoi qu'il arrive
+                Console.WriteLine("Bloc finally exécuté.");
             }
         }
     }
 
-    private async static void UpdatePatient()
-    {
-        using (var context = new SGCPContext())
-        {
-            IPatient _patientRep = new PatientRepository(context);
-            IGestionPatientService _gestionPatientService = new GestionPatientService(_patientRep);
-
-            Patient p = new Patient
-            {
-                Id = 46,
-                Nom = "Diallo",
-                Prenom = "TEST 4",
-                Addresse = "dfdf",
-                DateDeNaissance = DateTime.Now,
-                AddresseCourriel = "dfdf",
-                NumeroTelephones = "44454555"
-            };
-
-            await _gestionPatientService.UpdatePatientAsync(p);
-
-            Console.WriteLine("Modifier");
-        }
-    }
 }

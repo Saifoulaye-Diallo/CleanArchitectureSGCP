@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddPatient));
             PannelPrincipal = new Panel();
             splitContainer_ajout = new SplitContainer();
@@ -45,14 +46,7 @@
             Telephone = new TextBox();
             Courriel = new TextBox();
             Nom = new TextBox();
-            // Créer une instance de ToolTip
-            ToolTip toolTip = new ToolTip();
-            // Configurer les propriétés
-            toolTip.AutoPopDelay = 5000; // Durée d'affichage (en millisecondes)
-            toolTip.InitialDelay = 200;  // Délai avant d'afficher le ToolTip
-            toolTip.ReshowDelay = 100;   // Délai avant de réafficher si l'utilisateur passe à un autre contrôle
-            toolTip.ShowAlways = true;   // Toujours afficher, même si le formulaire n'est pas actif
-
+            toolTip = new ToolTip(components);
             PannelPrincipal.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer_ajout).BeginInit();
             splitContainer_ajout.Panel1.SuspendLayout();
@@ -191,9 +185,9 @@
             btn_annuler.TabIndex = 0;
             btn_annuler.Text = "Annuler";
             btn_annuler.TextAlign = ContentAlignment.MiddleRight;
+            toolTip.SetToolTip(btn_annuler, "Cliquez pour annuler");
             btn_annuler.UseVisualStyleBackColor = false;
             btn_annuler.Click += btn_annuler_Click;
-            toolTip.SetToolTip(btn_annuler, "Cliquez ici pour annuler l'ajout du patient.");
             // 
             // btn_save
             // 
@@ -210,9 +204,9 @@
             btn_save.TabIndex = 1;
             btn_save.Text = "Enregistrer";
             btn_save.TextAlign = ContentAlignment.MiddleRight;
+            toolTip.SetToolTip(btn_save, "Cliquez pour enregistrer");
             btn_save.UseVisualStyleBackColor = false;
             btn_save.Click += btn_save_Click;
-            toolTip.SetToolTip(btn_annuler, "Cliquez ici pour enregistrer l'ajout du patient.");
             // 
             // Date
             // 
@@ -257,6 +251,13 @@
             Nom.TabIndex = 0;
             Nom.Tag = "";
             // 
+            // toolTip
+            // 
+            toolTip.AutoPopDelay = 5000;
+            toolTip.InitialDelay = 200;
+            toolTip.ReshowDelay = 100;
+            toolTip.ShowAlways = true;
+            // 
             // AddPatient
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -293,5 +294,6 @@
         private DateTimePicker Date;
         private Button btn_annuler;
         private Button btn_save;
+        private ToolTip toolTip;
     }
 }

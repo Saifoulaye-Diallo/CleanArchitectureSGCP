@@ -82,9 +82,8 @@
             Btn_Connexion.Name = "Btn_Connexion";
             Btn_Connexion.Size = new Size(129, 32);
             Btn_Connexion.TabIndex = 3;
-            Btn_Connexion.Text = "Se Connecter";
-        
-            toolTip.SetToolTip(Btn_Connexion, "Entrer vos informations et cliquer ici pour vous connecter.");
+            Btn_Connexion.Text = "Connexion";
+            toolTip.SetToolTip(Btn_Connexion, "Ouvrir une session");
             Btn_Connexion.UseVisualStyleBackColor = false;
             Btn_Connexion.Click += Btn_Connexion_Click;
             // 
@@ -110,7 +109,7 @@
             btn_fermer.TabIndex = 6;
             btn_fermer.Text = "Fermer";
             btn_fermer.TextAlign = ContentAlignment.MiddleRight;
-            toolTip.SetToolTip(btn_fermer, "Cliquez ici pour enregistrer l'ajout de la nouvelle consultation.");
+            toolTip.SetToolTip(btn_fermer, "Cliquez pour fermer l'application");
             btn_fermer.UseVisualStyleBackColor = false;
             btn_fermer.Click += btn_fermer_Click;
             // 

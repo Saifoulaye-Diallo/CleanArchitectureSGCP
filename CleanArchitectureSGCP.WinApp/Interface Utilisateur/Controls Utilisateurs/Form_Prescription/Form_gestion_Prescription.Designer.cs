@@ -186,6 +186,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             tabControlGestionPrescription.SizeMode = TabSizeMode.Fixed;
             tabControlGestionPrescription.TabIndex = 0;
             tabControlGestionPrescription.DrawItem += TabControlGestionPrescription_DrawItem;
+            tabControlGestionPrescription.Selecting += DisableTabConsultation;
             tabControlGestionPrescription.Selecting += DisableTabPrescription;
             // 
             // tablistePatients
@@ -316,7 +317,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             btn_fermer.TabIndex = 3;
             btn_fermer.Text = "Fermer";
             btn_fermer.TextAlign = ContentAlignment.MiddleRight;
-            toolTip.SetToolTip(btn_fermer, "Cliquez ici pour enregistrer l'ajout de la nouvelle consultation.");
+            toolTip.SetToolTip(btn_fermer, "Cliquez pour fermer l'application");
             btn_fermer.UseVisualStyleBackColor = false;
             btn_fermer.Click += btn_fermer_Click;
             // 
@@ -335,7 +336,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             btn_consultation.TabIndex = 2;
             btn_consultation.Text = "Consultations....";
             btn_consultation.TextAlign = ContentAlignment.MiddleRight;
-            toolTip.SetToolTip(btn_consultation, "Cliquez ici pour consulter la fiche du patient selectionnée.");
+            toolTip.SetToolTip(btn_consultation, "Cliquez pour afficher la liste des consultations");
             btn_consultation.UseVisualStyleBackColor = false;
             btn_consultation.Click += btn_consultation_Click;
             // 

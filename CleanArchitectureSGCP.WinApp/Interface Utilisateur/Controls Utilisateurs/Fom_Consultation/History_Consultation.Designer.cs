@@ -117,7 +117,7 @@
             btn_fermer.TabIndex = 1;
             btn_fermer.Text = "Fermer";
             btn_fermer.TextAlign = ContentAlignment.MiddleRight;
-            toolTip.SetToolTip(btn_fermer, "Cliquez ici pour enregistrer l'ajout de la nouvelle consultation.");
+            toolTip.SetToolTip(btn_fermer, "Cliquez pour fermer ");
             btn_fermer.UseVisualStyleBackColor = false;
             btn_fermer.Click += btn_fermer_Click;
             // 

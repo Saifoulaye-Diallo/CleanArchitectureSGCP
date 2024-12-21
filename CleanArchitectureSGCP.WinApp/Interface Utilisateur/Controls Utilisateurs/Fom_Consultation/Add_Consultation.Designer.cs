@@ -274,7 +274,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             btn_annuler.TabIndex = 0;
             btn_annuler.Text = "Annuler";
             btn_annuler.TextAlign = ContentAlignment.MiddleRight;
-            toolTip.SetToolTip(btn_annuler, "Cliquez ici pour annuler l'ajout de la nouvelle consultation.");
+            toolTip.SetToolTip(btn_annuler, "Cliquez pour annuler");
             btn_annuler.UseVisualStyleBackColor = false;
             btn_annuler.Click += btn_annuler_Click;
             // 
@@ -319,7 +319,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             btn_save.TabIndex = 1;
             btn_save.Text = "Enregistrer";
             btn_save.TextAlign = ContentAlignment.MiddleRight;
-            toolTip.SetToolTip(btn_annuler, "Cliquez ici pour enregistrer l'ajout de la nouvelle consultation.");
+            toolTip.SetToolTip(btn_save, "Cliquez pour enregistrer");
             btn_save.UseVisualStyleBackColor = false;
             btn_save.Click += btn_save_Click;
             // 

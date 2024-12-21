@@ -1,115 +1,119 @@
-﻿using CleanArchitectureSGCP.Core.Entities;
-using CleanArchitectureSGCP.Core.Interfaces;
-using CleanArchitectureSGCP.Core.Services;
-using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Form_Patient;
-using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.PatientForm;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿// Importation des bibliothèques nécessaires
+using CleanArchitectureSGCP.Core.Entities; // Modèles d'entités
+using CleanArchitectureSGCP.Core.Interfaces; // Interfaces pour la gestion des données
+using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Form_Patient; // Formulaires patients
+using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.PatientForm; // Gestion des patients
 
 namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Patient
 {
+    // Classe pour afficher la liste des patients et gérer leurs informations
     public partial class ListPatients : UserControl
     {
+        // Déclaration des services nécessaires
         private readonly IGestionMedecinService _gestionMedecinService;
         private readonly IGestionPatientService _gestionPatientService;
 
+        // Variable pour stocker le patient sélectionné
         CleanArchitectureSGCP.Core.Entities.Patient _patient;
+
+        // Constructeur avec injection des services
         public ListPatients(IGestionMedecinService gestionMedecinService, IGestionPatientService gestionPatientService)
         {
             // Initialisation des dépendances
             _gestionMedecinService = gestionMedecinService;
             _gestionPatientService = gestionPatientService ?? throw new ArgumentNullException(nameof(gestionPatientService));
 
-            // Initialiser les composants
+            // Initialiser les composants graphiques
             InitializeComponent();
 
             // Configuration du DataGridView
-            dtgPatientList.MultiSelect = false;
-            dtgPatientList.AutoGenerateColumns = false;
-            StyleDataGridView(dtgPatientList);
+            dtgPatientList.MultiSelect = false; // Empêche la sélection multiple
+            dtgPatientList.AutoGenerateColumns = false; // Désactive la génération automatique des colonnes
+            StyleDataGridView(dtgPatientList); // Applique un style personnalisé au tableau
 
-            // Charger les données
+            // Chargement des données patients
             LoadPatients();
 
-            // Abonner les événements
+            // Abonnement à l'événement de sélection
             dtgPatientList.SelectionChanged += DtgPatientList_SelectionChanged;
         }
 
-
-        // Charger la liste des patients dans un DataGridView
+        // Chargement des patients dans le DataGridView
         private async void LoadPatients()
         {
-            // Désélectionner toutes les cellules après le chargement
-            var medecinId = Session.Instance.Medecin.Id;
-            // Charger la liste des patients
-            var patients = await _gestionPatientService.GetPatientsByMedecinIdAsync(medecinId);
-            dtgPatientList.DataSource = null; // Réinitialisez
-            dtgPatientList.DataSource = patients; // Rechargez les données
-            dtgPatientList.Refresh(); // Rafraîchissez l'affichage
-            dtgPatientList.ClearSelection();
-            dtgPatientList.AutoGenerateColumns = false;
-            dtgPatientList.ClearSelection();
+            try
+            {
+                // Récupérer l'ID du médecin connecté
+                var medecinId = Session.Instance.Medecin.Id;
+
+                // Charger la liste des patients associés au médecin
+                var patients = await _gestionPatientService.GetPatientsByMedecinIdAsync(medecinId);
+
+                // Mettre à jour le DataGridView
+                dtgPatientList.DataSource = null; // Réinitialiser les données
+                dtgPatientList.DataSource = patients; // Affecter les données
+                dtgPatientList.Refresh(); // Rafraîchir l'affichage
+                dtgPatientList.ClearSelection(); // Désélectionner toutes les lignes
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors du chargement des patients : {ex.Message}",
+                                "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
+        // Bouton pour ajouter un nouveau patient
         private void btn_ajouter_Click(object sender, EventArgs e)
         {
             var addPatientForm = new AddPatient(_gestionMedecinService);
 
+            // Afficher le formulaire d'ajout et vérifier si l'ajout est réussi
             var result = addPatientForm.ShowDialog();
 
             if (result == DialogResult.OK)
             {
-                LoadPatients(); // Recharger les patients après ajout
-                dtgPatientList.ClearSelection();
+                LoadPatients(); // Recharger la liste des patients
+                dtgPatientList.ClearSelection(); // Désélectionner toutes les lignes
             }
-
         }
 
+        // Bouton pour modifier un patient existant
         private void btn_Modifier_Click(object sender, EventArgs e)
         {
-
-            if (_patient != null)
+            if (_patient != null) // Vérifie qu'un patient est sélectionné
             {
+                // Ouvrir la fenêtre de modification
                 var upDatePatientForm = new UpdatePatient(_gestionPatientService, _patient);
                 var result = upDatePatientForm.ShowDialog();
 
-                // Si l'utilisateur a cliqué sur "Save", rechargez les patients
+                // Recharger la liste après modification
                 if (result == DialogResult.OK)
                 {
-                    LoadPatients(); // Recharger les patients après ajout
+                    LoadPatients();
                     dtgPatientList.ClearSelection();
                 }
             }
             else
             {
-                MessageBox.Show("Selectionnez un patient a modifier !!");
+                MessageBox.Show("Sélectionnez un patient à modifier !", "Information", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
         }
 
+        // Vérifie si une ligne est sélectionnée dans le DataGridView
         private void VerifierSelection()
         {
-            // Si aucune ligne n'est sélectionnée
             if (dtgPatientList.SelectedRows.Count == 0)
             {
+                // Désactiver les boutons si aucune ligne n'est sélectionnée
                 btn_consulter.Enabled = false;
                 btn_Modifier.Enabled = false;
-                _patient = null; // Réinitialiser l'objet patient
+                _patient = null;
                 return;
             }
 
-            // Récupérer la première ligne sélectionnée
+            // Récupérer la ligne sélectionnée et remplir l'objet patient
             DataGridViewRow row = dtgPatientList.SelectedRows[0];
 
-            // Créer et remplir l'objet Patient
             CleanArchitectureSGCP.Core.Entities.Patient _patientSelect = new CleanArchitectureSGCP.Core.Entities.Patient
             {
                 Id = (int)row.Cells["ID"].Value,
@@ -128,23 +132,26 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateu
             btn_Modifier.Enabled = true;
         }
 
+        // Gérer le changement de sélection dans le DataGridView
         private void DtgPatientList_SelectionChanged(object sender, EventArgs e)
         {
-            VerifierSelection();
+            VerifierSelection(); // Vérifie si une ligne est sélectionnée
         }
 
+        // Bouton pour consulter les informations d'un patient
         private void btn_consulter_Click(object sender, EventArgs e)
         {
             if (_patient != null)
             {
-                var upDatePatientForm = new ViewPatient(_patient);
-                var result = upDatePatientForm.ShowDialog();
+                var viewPatientForm = new ViewPatient(_patient);
+                viewPatientForm.ShowDialog();
             }
         }
 
+        // Bouton pour fermer l'application
         private void btn_fermer_Click(object sender, EventArgs e)
         {
-            Application.Exit(); 
+            Application.Exit(); // Ferme complètement l'application
         }
     }
 }

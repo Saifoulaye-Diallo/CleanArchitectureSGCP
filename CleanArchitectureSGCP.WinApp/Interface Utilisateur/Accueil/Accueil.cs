@@ -1,95 +1,90 @@
-﻿using CleanArchitectureSGCP.Core.Entities;
-using CleanArchitectureSGCP.Core.Interfaces;
-using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs;
-using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Fom_Consultation;
-using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Form_DossierMedical;
-using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Patient;
-using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription;
-using MetroFramework;
-using MetroFramework.Forms;
-using Microsoft.Extensions.DependencyInjection;
-using System.Drawing;
-using System.Windows.Forms;
+﻿// Importations des bibliothèques et espaces de noms nécessaires
+using CleanArchitectureSGCP.Core.Interfaces; // Interfaces pour les services
+using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Fom_Consultation; // Gestion des consultations
+using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Form_DossierMedical; // Gestion des dossiers médicaux
+using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Controls_Utilisateurs.Patient; // Gestion des patients
+using CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription; // Gestion des prescriptions
+using MetroFramework; // Framework Metro pour les styles
+using MetroFramework.Forms; // Formulaires stylisés avec Metro
+
 
 namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
 {
-
+    // Classe principale héritant de MetroForm pour un style moderne
     public partial class Accueil : MetroForm
     {
-        private readonly IGestionPatientService _gestionPatientService;
-        private readonly IGestionMedecinService _gestionMedecinService;
-        private readonly IGestionDossierMedicalService _gestionDossierMedicalService;
-        private readonly IGestionConsultationsService _gestionConsultationsService;
-        private readonly IGestionPrescriptionService _gestionPrescriptionService;
-        public Accueil(IGestionPatientService gestionPatientService, IGestionMedecinService gestionMedecinService, IGestionDossierMedicalService gestionDossierMedicalService, IGestionConsultationsService gestionConsultationsService, IGestionPrescriptionService gestionPrescriptionService)
+        // Déclaration des services nécessaires pour la gestion des données
+        private readonly IGestionPatientService _gestionPatientService; // Service pour la gestion des patients
+        private readonly IGestionMedecinService _gestionMedecinService; // Service pour la gestion des médecins
+        private readonly IGestionDossierMedicalService _gestionDossierMedicalService; // Service pour les dossiers médicaux
+        private readonly IGestionConsultationsService _gestionConsultationsService; // Service pour les consultations
+        private readonly IGestionPrescriptionService _gestionPrescriptionService; // Service pour les prescriptions
+
+        // Constructeur avec injection des services nécessaires
+        public Accueil(
+            IGestionPatientService gestionPatientService,
+            IGestionMedecinService gestionMedecinService,
+            IGestionDossierMedicalService gestionDossierMedicalService,
+            IGestionConsultationsService gestionConsultationsService,
+            IGestionPrescriptionService gestionPrescriptionService)
         {
+            // Initialisation des services avec gestion des erreurs en cas de null
             _gestionPatientService = gestionPatientService ?? throw new ArgumentNullException(nameof(gestionPatientService));
             _gestionMedecinService = gestionMedecinService ?? throw new ArgumentNullException(nameof(gestionMedecinService));
             _gestionDossierMedicalService = gestionDossierMedicalService;
             _gestionConsultationsService = gestionConsultationsService;
             _gestionPrescriptionService = gestionPrescriptionService;
+
+            // Initialisation des composants graphiques
             InitializeComponent();
-           
-            // Applique un thème clair Metro
+
+            // Applique un thème clair et une couleur au formulaire
             this.Theme = MetroThemeStyle.Light;
             this.Style = MetroColorStyle.Blue;
 
-            // Initialiser le Panel pour les UserControls
-            InitializePanelContainer();
-
-            // Ajouter les icônes aux éléments du MenuStrip
+            // Initialiser les composants spécifiques du formulaire
             AjouterIconesMenu();
-
-            // Styliser le MenuStrip
             StyleMenuStrip(MenuPrincipatl);
+
+            // Définir le titre de la fenêtre
             this.Text = "SGCP";
 
-
+            // Ajouter un gestionnaire pour fermer l'application lors de la fermeture du formulaire
             this.FormClosed += MainForm_FormClosed;
-          
-
         }
 
-        private void InitializePanelContainer()
-        {
+     
 
-
-            // Ajouter le Panel au formulaire
-            // this.Controls.Add(PannelPrincipal);
-
-            // Charger un UserControl par défaut
-            // LoadUserControl(new UC_Accueil());
-        }
-
+        // Ajoute des icônes aux éléments du menu
         private void AjouterIconesMenu()
         {
-            // Exemple d'ajout d'icônes aux éléments du menu
             gestionDesPatientsToolStripMenuItem.Image = Properties.Resources.gestion_hospitalisation;
-
             gestionDossierMedicalToolStripMenuItem.Image = Properties.Resources.destion_dossier_medical_icon;
-
             gestionDesConsultationsToolStripMenuItem.Image = Properties.Resources.gestion_consultation;
-
             gestionDesPrescritptionToolStripMenuItem.Image = Properties.Resources.gestion_prescription_icon;
         }
 
+        // Applique un style personnalisé au MenuStrip
         private void StyleMenuStrip(MenuStrip menu)
         {
             menu.BackColor = Color.White;
             menu.ForeColor = Color.Black;
             menu.RenderMode = ToolStripRenderMode.Professional;
 
+            // Applique un style aux sous-menus
             foreach (ToolStripMenuItem menuItem in menu.Items)
             {
                 StyleMenuItems(menuItem);
             }
         }
 
+        // Applique un style aux éléments des sous-menus
         private void StyleMenuItems(ToolStripMenuItem menuItem)
         {
             menuItem.ForeColor = Color.Black;
             menuItem.BackColor = Color.White;
 
+            // Gestion des survols pour les sous-menus
             foreach (ToolStripItem subItem in menuItem.DropDownItems)
             {
                 if (subItem is ToolStripMenuItem)
@@ -104,70 +99,84 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Accueil
             }
         }
 
-        // Méthode pour charger un UserControl dans le PannelPrincipal
+        // Charge un UserControl dans le panneau principal
         private void LoadUserControl(UserControl uc)
         {
-            PannelPrincipal.Controls.Clear(); // Vider le contenu actuel
-            PannelPrincipal.Controls.Add(uc); // Ajouter le UserControl
-            uc.Dock = DockStyle.Fill;                        // uc.Dock = DockStyle.Fill; // Remplir tout l'espace disponible
+            PannelPrincipal.Controls.Clear(); // Supprime le contenu existant
+            PannelPrincipal.Controls.Add(uc); // Ajoute le nouveau contrôle
+            uc.Dock = DockStyle.Fill; // Remplit tout l'espace disponible
         }
 
-
+        // Gestion du clic sur l'élément "Gestion des Patients"
         private void gestionDesPatientsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            gestionDesPatientsToolStripMenuItem.BackColor = Color.LightBlue;
+            gestionDesPatientsToolStripMenuItem.BackColor = Color.LightBlue; // Change la couleur sélectionnée
 
             var listPatients = new ListPatients(_gestionMedecinService, _gestionPatientService);
-            LoadUserControl(listPatients);
+            LoadUserControl(listPatients); // Charge la liste des patients
         }
 
+        // Ferme l'application lors de la fermeture du formulaire
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
         }
 
+        // Gestion des consultations
         private void gestionDesConsultationsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           
-            var listPatientConsultation = new List_Patient_Consultation(_gestionMedecinService, _gestionPatientService, _gestionDossierMedicalService, _gestionConsultationsService);
-            LoadUserControl(listPatientConsultation);
-            
+            var listPatientConsultation = new List_Patient_Consultation(
+                _gestionMedecinService,
+                _gestionPatientService,
+                _gestionDossierMedicalService,
+                _gestionConsultationsService);
+
+            LoadUserControl(listPatientConsultation); // Charge la gestion des consultations
         }
 
+        // Gestion des prescriptions
         private void gestionDesPrescritptionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var gestionPrescription = new Form_gestion_Prescription(_gestionPatientService, _gestionMedecinService, _gestionConsultationsService, _gestionPrescriptionService);
+            var gestionPrescription = new Form_gestion_Prescription(
+                _gestionPatientService,
+                _gestionMedecinService,
+                _gestionConsultationsService,
+                _gestionPrescriptionService);
+
             LoadUserControl(gestionPrescription);
-         
         }
 
+        // Gestion des dossiers médicaux
         private void gestionDossierMedicalToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var gestionDossierMedical = new ListPatientDossierMedial(
+                _gestionMedecinService,
+                _gestionPatientService,
+                _gestionPrescriptionService);
 
-            var gestionDossierMedical = new ListPatientDossierMedial(_gestionMedecinService, _gestionPatientService,_gestionPrescriptionService);
             LoadUserControl(gestionDossierMedical);
         }
+
+        // Change la couleur des menus sélectionnés
         private void ChangeMenuColor(ToolStripMenuItem selectedMenu)
         {
-            // Réinitialiser la couleur de tous les menus
             foreach (ToolStripMenuItem item in MenuPrincipatl.Items)
             {
-                item.BackColor = Color.White; // Couleur par défaut
-                item.ForeColor = Color.Black; // Texte noir par défaut
+                item.BackColor = Color.White;
+                item.ForeColor = Color.Black;
             }
 
-            // Appliquer la couleur au menu sélectionné
-            selectedMenu.BackColor = Color.LightBlue; // Couleur de fond
-            selectedMenu.ForeColor = Color.DarkBlue;  // Texte en bleu foncé
+            selectedMenu.BackColor = Color.LightBlue;
+            selectedMenu.ForeColor = Color.DarkBlue;
         }
+
+        // Gestion des clics sur les menus
         private void Menu_Click(object sender, EventArgs e)
         {
             if (sender is ToolStripMenuItem selectedMenu)
             {
-                // Appeler la méthode générale pour changer la couleur
-                ChangeMenuColor(selectedMenu);
+                ChangeMenuColor(selectedMenu); // Applique la couleur
             }
         }
-
     }
 }

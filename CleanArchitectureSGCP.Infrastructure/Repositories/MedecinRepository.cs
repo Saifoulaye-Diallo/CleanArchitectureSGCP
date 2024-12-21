@@ -29,8 +29,6 @@ namespace CleanArchitectureSGCP.Infrastructure.Repositories
                 return null;
             }
         }
-
-        //Recuperer la medecin avec ses patients.
         public async Task<Medecin> GetMedecinWithPatientsAsync(int medecinId)
         {
             return await _Sgcpcontext.Medecins
