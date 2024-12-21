@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>SGCP</AssemblyName>
+    <ApplicationIcon>icons8_clinique_48_uVO_icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +17,10 @@
     <None Remove="Resources\gestion_hospitalisation.png" />
     <None Remove="Resources\gestion_prescription_icon.png" />
     <None Remove="Resources\login_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icons8_clinique_48_uVO_icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
