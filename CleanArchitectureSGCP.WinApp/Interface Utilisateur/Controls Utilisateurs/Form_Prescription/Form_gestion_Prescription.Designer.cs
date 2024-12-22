@@ -186,9 +186,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             tabControlGestionPrescription.SizeMode = TabSizeMode.Fixed;
             tabControlGestionPrescription.TabIndex = 0;
             tabControlGestionPrescription.DrawItem += TabControlGestionPrescription_DrawItem;
-            tabControlGestionPrescription.Selecting += DisableTabConsultation;
-            tabControlGestionPrescription.Selecting += DisableTabPrescription; 
-            
+            tabControlGestionPrescription.Selecting += DisableTabPrescription;
             // 
             // tablistePatients
             // 
@@ -214,6 +212,8 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             // 
             // dtgPatientList
             // 
+            dtgPatientList.AllowUserToAddRows = false;
+            dtgPatientList.AllowUserToDeleteRows = false;
             dtgPatientList.BackgroundColor = Color.White;
             dtgPatientList.BorderStyle = BorderStyle.Fixed3D;
             dtgPatientList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -223,6 +223,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             dtgPatientList.Location = new Point(0, 0);
             dtgPatientList.MultiSelect = false;
             dtgPatientList.Name = "dtgPatientList";
+            dtgPatientList.ReadOnly = true;
             dtgPatientList.Size = new Size(1214, 544);
             dtgPatientList.TabIndex = 1;
             dtgPatientList.CellClick += dtgPaitentList_CellClick;
@@ -233,12 +234,14 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             nom.DataPropertyName = "Nom";
             nom.HeaderText = "Nom";
             nom.Name = "nom";
+            nom.ReadOnly = true;
             // 
             // Dossier
             // 
             Dossier.DataPropertyName = "DossierMedical";
             Dossier.HeaderText = "Dossier";
             Dossier.Name = "Dossier";
+            Dossier.ReadOnly = true;
             Dossier.Visible = false;
             // 
             // prenom
@@ -247,6 +250,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             prenom.DataPropertyName = "Prenom";
             prenom.HeaderText = "Prénom";
             prenom.Name = "prenom";
+            prenom.ReadOnly = true;
             // 
             // dateDeNaissance
             // 
@@ -254,6 +258,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             dateDeNaissance.DataPropertyName = "DateDeNaissance";
             dateDeNaissance.HeaderText = "Date de Naissance";
             dateDeNaissance.Name = "dateDeNaissance";
+            dateDeNaissance.ReadOnly = true;
             // 
             // adresse
             // 
@@ -261,6 +266,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             adresse.DataPropertyName = "Addresse";
             adresse.HeaderText = "Addresse";
             adresse.Name = "adresse";
+            adresse.ReadOnly = true;
             // 
             // telephone
             // 
@@ -268,6 +274,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             telephone.DataPropertyName = "NumeroTelephones";
             telephone.HeaderText = "Téléphone";
             telephone.Name = "telephone";
+            telephone.ReadOnly = true;
             // 
             // courriel
             // 
@@ -275,12 +282,14 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             courriel.DataPropertyName = "AddresseCourriel";
             courriel.HeaderText = "Courriel";
             courriel.Name = "courriel";
+            courriel.ReadOnly = true;
             // 
             // ID
             // 
             ID.DataPropertyName = "Id";
             ID.HeaderText = "Id";
             ID.Name = "ID";
+            ID.ReadOnly = true;
             ID.Visible = false;
             // 
             // panel_bouton

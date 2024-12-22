@@ -35,7 +35,9 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             InitializeComponent();
             // Charger les données du dtgListPatient
             LoadPatients();
-
+            dtgPatientList.MultiSelect = false; // Empêche la sélection multiple
+            dtgPatientList.AutoGenerateColumns = false; // Désactive la génération automatique des colonnes
+            StyleDataGridView(dtgPatientList); // Applique un style personnalisé au DataGridView
         }
 
         private void dtgPaitentList_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -204,6 +206,13 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
 
                 // Désélectionner toutes les lignes après chargement
                 dtgPatientList.ClearSelection();
+
+                // Réinitialise et recharge les données dans le DataGridView
+                dtgPatientList.DataSource = null;
+                dtgPatientList.DataSource = patients;
+                dtgPatientList.Refresh(); // Rafraîchit l'affichage
+
+              
             }
             catch (Exception ex)
             {
