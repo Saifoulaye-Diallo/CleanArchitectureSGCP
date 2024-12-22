@@ -187,7 +187,8 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             tabControlGestionPrescription.TabIndex = 0;
             tabControlGestionPrescription.DrawItem += TabControlGestionPrescription_DrawItem;
             tabControlGestionPrescription.Selecting += DisableTabConsultation;
-            tabControlGestionPrescription.Selecting += DisableTabPrescription;
+            tabControlGestionPrescription.Selecting += DisableTabPrescription; 
+            
             // 
             // tablistePatients
             // 

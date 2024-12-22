@@ -247,6 +247,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
         }
         private async void LoadPresciption(int consultationId)
         {
+            StyleDataGridView(dtgListePrescription);
             try
             {
                 // Initialisation de la fiche consultation
@@ -266,7 +267,6 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
                 // Vérification des données récupérées
                 if (prescriptions == null || prescriptions.Count == 0)
                 {
-                    MessageBox.Show("Aucune prescription trouvée pour cette consultation.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     dtgListePrescription.DataSource = null; // Vide la table
                 }
                 else
