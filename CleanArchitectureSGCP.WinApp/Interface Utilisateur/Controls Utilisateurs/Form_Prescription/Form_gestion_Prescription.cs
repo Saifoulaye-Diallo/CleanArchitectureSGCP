@@ -102,29 +102,45 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
         private void dtgPrescriptionList_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // Vérifiez que la ligne cliquée est valide (évitez les clics sur les en-têtes)
-            if (e.RowIndex >= 0)
+            if (e.RowIndex >= 0 && e.RowIndex < dtgListePrescription.Rows.Count) // Vérification supplémentaire
             {
-                // Récupérer la ligne correspondante
-                DataGridViewRow row = dtgListePrescription.Rows[e.RowIndex];
-                // Créer et remplir l'objet Consultation de manière sécurisée
-                Prescription prescription = new Prescription
+                try
                 {
-                    Id = row.Cells["IDE"].Value != null ? Convert.ToInt32(row.Cells["IDE"].Value) : 0,
-                    Medicament = row.Cells["Medicament"].Value?.ToString(),
-                    Dosage = row.Cells["Dosage"].Value?.ToString(),
-                    Duree = row.Cells["Duree"].Value?.ToString(),
-                    Instruction = row.Cells["Instruction"].Value?.ToString(),
-                    etat = (int)row.Cells["etat"].Value,
-                };
+                    // Récupérer la ligne sélectionnée
+                    DataGridViewRow row = dtgListePrescription.Rows[e.RowIndex];
 
-                _prescription = prescription;
-                // Activer le bouton de prescription
+                    // Vérifiez si les cellules sont valides avant d'accéder à leurs valeurs
+                    Prescription prescription = new Prescription
+                    {
+                        Id = row.Cells["IDE"].Value != null && int.TryParse(row.Cells["IDE"].Value.ToString(), out int id) ? id : 0,
+                        Medicament = row.Cells["Medicament"].Value?.ToString() ?? string.Empty,
+                        Dosage = row.Cells["Dosage"].Value?.ToString() ?? string.Empty,
+                        Duree = row.Cells["Duree"].Value?.ToString() ?? string.Empty,
+                        Instruction = row.Cells["Instruction"].Value?.ToString() ?? string.Empty,
+                        etat = row.Cells["etat"].Value != null && int.TryParse(row.Cells["etat"].Value.ToString(), out int etat) ? etat : 0,
+                    };
 
-                btn_cloturer_prescription.Enabled = true;
-                btn_consulter_prescription.Enabled = true;
+                    // Mise à jour de la prescription sélectionnée
+                    _prescription = prescription;
 
+                    // Activer les boutons associés
+                    btn_cloturer_prescription.Enabled = true;
+                    btn_consulter_prescription.Enabled = true;
+                }
+                catch (Exception ex)
+                {
+                    // Gestion de l'erreur et affichage d'un message utilisateur
+                    MessageBox.Show($"Erreur lors du traitement de la sélection : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                // Désactiver les boutons si aucune ligne valide n'est sélectionnée
+                btn_cloturer_prescription.Enabled = false;
+                btn_consulter_prescription.Enabled = false;
             }
         }
+
 
         private void DisableTabPrescription(object sender, TabControlCancelEventArgs e)
         {
@@ -166,17 +182,36 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
         }
         private async void LoadPatients()
         {
-            // Désélectionner toutes les cellules après le chargement
-            var medecinId = Session.Instance.Medecin.Id;
-            // Charger la liste des patients
-            var patients = await _gestionPatientService.GetPatientsByMedecinIdAsync(medecinId);
+            try
+            {
+                // Désélectionner toutes les cellules après le chargement
+                var medecinId = Session.Instance.Medecin.Id;
 
-            dtgPatientList.DataSource = patients; // Rechargez les données
-            dtgPatientList.ClearSelection();
-            dtgPatientList.AutoGenerateColumns = false;
-            StyleDataGridView(dtgPatientList);
-            btn_consultation.Enabled = false;
+                // Charger la liste des patients
+                var patients = await _gestionPatientService.GetPatientsByMedecinIdAsync(medecinId);
+
+                // Définir les données dans le DataGridView
+                dtgPatientList.DataSource = patients;
+
+                // Désactiver l'ajout automatique des colonnes
+                dtgPatientList.AutoGenerateColumns = false;
+
+                // Appliquer un style personnalisé
+                StyleDataGridView(dtgPatientList);
+
+                // Désactiver le bouton par défaut
+                btn_consultation.Enabled = false;
+
+                // Désélectionner toutes les lignes après chargement
+                dtgPatientList.ClearSelection();
+            }
+            catch (Exception ex)
+            {
+                // Gestion des erreurs
+                MessageBox.Show($"Erreur lors du chargement des patients : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
         private async void LoadConsultation(int idPatient)
         {
             InitFichePatient();
@@ -212,17 +247,45 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
         }
         private async void LoadPresciption(int consultationId)
         {
-            InitFicheConsultation();
-            // Charger la liste des patients
-            var prescriptions = await _gestionPrescriptionService.GetPrescriptionsByConsultationIdAsync(consultationId);
-            dtgListePrescription.DataSource = prescriptions; // Rechargez les données
-            dtgListePrescription.ClearSelection();
-            dtgListePrescription.AutoGenerateColumns = false;
-            StyleDataGridView(dtgListePrescription);
+            try
+            {
+                // Initialisation de la fiche consultation
+                InitFicheConsultation();
 
-            btn_cloturer_prescription.Enabled = false;
-            btn_consulter_prescription.Enabled = false;
+                // Désactiver les boutons avant chargement
+                btn_cloturer_prescription.Enabled = false;
+                btn_consulter_prescription.Enabled = false;
+
+                // Préparer la configuration avant d'affecter les données
+                dtgListePrescription.AutoGenerateColumns = false; // Important : placé avant le DataSource
+                dtgListePrescription.ClearSelection();
+
+                // Charger les prescriptions de manière asynchrone
+                var prescriptions = await _gestionPrescriptionService.GetPrescriptionsByConsultationIdAsync(consultationId);
+
+                // Vérification des données récupérées
+                if (prescriptions == null || prescriptions.Count == 0)
+                {
+                    MessageBox.Show("Aucune prescription trouvée pour cette consultation.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    dtgListePrescription.DataSource = null; // Vide la table
+                }
+                else
+                {
+                    dtgListePrescription.DataSource = prescriptions;
+                    StyleDataGridView(dtgListePrescription); // Appliquer les styles
+                }
+
+                // Finaliser la configuration après chargement
+                dtgListePrescription.Refresh();
+                dtgListePrescription.ClearSelection();
+            }
+            catch (Exception ex)
+            {
+                // Gestion des erreurs
+                MessageBox.Show($"Erreur lors du chargement des prescriptions : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
 
 
 
@@ -240,7 +303,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
                 TxtPrenom.Text = _patient.Prenom;
                 TxtAddresse.Text = _patient.Addresse;
                 TxtCourriel.Text = _patient.AddresseCourriel;
-                TxtDate.Text = _patient.DateDeNaissance.ToString("yyyy/MM/dd");
+                TxtDate.Text = _patient.DateDeNaissanceFormatee;
                 TxtTelephone.Text = _patient.NumeroTelephones;
             }
         }
