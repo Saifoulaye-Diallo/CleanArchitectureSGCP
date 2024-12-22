@@ -186,7 +186,7 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             tabControlGestionPrescription.SizeMode = TabSizeMode.Fixed;
             tabControlGestionPrescription.TabIndex = 0;
             tabControlGestionPrescription.DrawItem += TabControlGestionPrescription_DrawItem;
-            tabControlGestionPrescription.Selecting += DisableTabPrescription;
+          
             // 
             // tablistePatients
             // 

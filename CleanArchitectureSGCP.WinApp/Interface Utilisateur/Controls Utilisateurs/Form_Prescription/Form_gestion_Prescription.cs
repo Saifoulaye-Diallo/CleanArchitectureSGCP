@@ -38,6 +38,8 @@ namespace CleanArchitectureSGCP.WinApp.Interface_Utilisateur.Form_Prescription
             dtgPatientList.MultiSelect = false; // Empêche la sélection multiple
             dtgPatientList.AutoGenerateColumns = false; // Désactive la génération automatique des colonnes
             StyleDataGridView(dtgPatientList); // Applique un style personnalisé au DataGridView
+            tabControlGestionPrescription.Selecting += DisableTabPrescription;
+            tabControlGestionPrescription.Selecting += DisableTabConsultation;
         }
 
         private void dtgPaitentList_CellClick(object sender, DataGridViewCellEventArgs e)
